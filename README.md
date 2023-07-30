@@ -1,7 +1,7 @@
 <div align="center">
 <h1 align="center">EasyApi</h1>
 
-一款Web端的Http管理工具
+一款 Web 端的 HTTP 管理工具
 
 ![license](https://img.shields.io/github/license/yd-coder/EasyAPi)
 ![language](https://img.shields.io/github/languages/top/yd-coder/EasyAPi)
