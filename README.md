@@ -1,27 +1,30 @@
-# React + TypeScript + Vite
+<div align="center">
+<h1 align="center">EasyApi</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一款Web端的Http管理工具
 
-Currently, two official plugins are available:
+![license](https://img.shields.io/github/license/yd-coder/EasyAPi)
+![language](https://img.shields.io/github/languages/top/yd-coder/EasyAPi)
+![last](https://img.shields.io/github/last-commit/yd-coder/EasyAPi)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+</div>
+# :sparkles: 特性
 
-## Expanding the ESLint configuration
+- :package:
+- :electric_plug:
+- :zap:
+- :rocket:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# :dart: 兼容环境
 
-- Configure the top-level `parserOptions` property like this:
+- 现代浏览器（Chrome >= 64, Edge >= 79, Firefox >= 78, Safari >= 12）
+- Node.js >= 14.0.0
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+# :computer: 本地调试
+
+```bash
+$ git clone https://github.com/yd-coder/EasyApi.git
+$ cd easy-api
+$ pnpm install
+$ pnpm dev
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
