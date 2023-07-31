@@ -8,7 +8,7 @@
 		"paths": {
 			"@/*": ["./src/*"]
 		},
-
+1
 		/* Bundler mode */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
