@@ -3,7 +3,7 @@ lockfileVersion: '6.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
-1
+
 dependencies:
   antd:
     specifier: ^5.7.3
