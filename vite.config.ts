@@ -3,6 +3,7 @@ import path from 'path'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+	base: '/EasyApi/', // 设置打包路径
 	plugins: [react()],
 	resolve: {
 		alias: {
