@@ -1,4 +1,5 @@
 <div align="center">
+<img width="130" src="https://raw.githubusercontent.com/yd-coder/EasyApi/17ed62dfd3bba0bb777f9524233aed472752561d/src/assets/icon/icon.svg" alt="EasyApi logo">
 <h1 align="center">EasyApi</h1>
 
 一款 Web 端的 HTTP 管理工具
