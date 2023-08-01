@@ -1,4 +1,5 @@
 <div align="center">
+<img width="130" src="https://raw.githubusercontent.com/yd-coder/EasyApi/17ed62dfd3bba0bb777f9524233aed472752561d/src/assets/icon/icon.svg" alt="EasyApi logo">
 <h1 align="center">EasyApi</h1>
 
 一款 Web 端的 HTTP 管理工具
@@ -6,6 +7,8 @@
 ![license](https://img.shields.io/github/license/yd-coder/EasyAPi)
 ![language](https://img.shields.io/github/languages/top/yd-coder/EasyAPi)
 ![last](https://img.shields.io/github/last-commit/yd-coder/EasyAPi)
+
+<a href="https://yd-coder.github.io/EasyApi/" target="_blank">在线体验</a>
 
 </div>
 
