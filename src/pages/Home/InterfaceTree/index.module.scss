@@ -1,0 +1,22 @@
+.apiTree {
+    font-size: 15px;
+    padding-left: 15px;
+    margin-top: -5px;
+}
+
+:global {
+    .ant-tree-treenode:hover {
+        background: #f5faff;
+        border-radius: 5px;
+    }
+
+    .ant-tree-node-content-wrapper {
+        width: 100% !important;
+        background: none !important;
+    }
+
+    .ant-tree-node-selected {
+        width: 100% !important;
+        background: transparent !important;
+    }
+}

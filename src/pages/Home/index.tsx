@@ -1,100 +1,123 @@
 import {
-	LayoutOutlined,
-	ApiOutlined,
-	FolderOutlined,
-	FolderOpenOutlined,
-	MenuUnfoldOutlined,
-	MenuFoldOutlined
+	LayoutTwoTone,
+	ApiTwoTone,
+	SmileTwoTone
 } from '@ant-design/icons';
-import { Layout, Menu, theme, Button } from 'antd';
-import type { MenuProps } from 'antd';
-import { useState } from 'react';
+import { Layout, theme, Tabs } from 'antd';
 import InterfaceList from './InterfaceList';
-const { Sider, Header, Content } = Layout;
+import style from './index.module.scss'
+import InterfaceTree from './InterfaceTree';
+import ProjectView from './ProjectView';
+import { useState, useRef } from 'react'
+import NewInterface from './NewInterface';
 
-type MenuItem = Required<MenuProps>['items'][number];
+const { Sider, Content } = Layout;
+
+interface items {
+	label: string,
+	key: string,
+	children: React.ReactNode
+}
+
+// tab栏的数据
+const initialItems: items[] = [
+	{ label: '项目概览', key: 'project', children: <ProjectView /> },
+	{ label: '接口管理', key: 'apiList', children: <InterfaceList /> }
+];
 
 const Home: React.FC = () => {
-	const [collapsed, setCollapsed] = useState(false);
+
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
 
-	const itemsMenuData: MenuItem[] = [
-		{
-			key: '/home/projectView',
-			icon: <LayoutOutlined />,
-			label: '项目概览',
-		},
-		{
-			key: '/home/interfaceManagement',
-			icon: <ApiOutlined />,
-			label: '接口管理',
-			children: [{
-				icon: <FolderOutlined />,
-				label: '根目录',
-				key: '/home/rootDirectory'
-			}, {
-				icon: <FolderOpenOutlined />,
-				label: '示例项目',
-				key: '/home/project_list',
-				children: [
-					{
-						label: 'GET  查询宠物详情',
-						key: '111',
-					},
-					{
-						label: 'POST 新建宠物信息',
-						key: '222',
-					},
-				]
-			}]
-		},
-	]
+	const [activeKey, setActiveKey] = useState(initialItems[0].key);
+	const [items, setItems] = useState(initialItems);
+	const newTabIndex = useRef(0);
+
+	// 点击左侧的目录 tab标签跟着切换
+	const showContent = (type: string) => {
+		const newPanes = [...items];
+		// 如果没有找到项目概览或者接口管理就添加
+		if(!newPanes.find((item)=>item.key=='project')&&type=='project'){
+			newPanes.push({ label: '项目概览', key: 'project', children: <ProjectView /> })
+			setItems(newPanes);
+		}
+		if(!newPanes.find((item)=>item.key=='apiList')&&type=='apiList'){
+			newPanes.push({ label: '接口管理', key: 'apiList', children: <InterfaceList /> })
+			setItems(newPanes);
+		}
+		setActiveKey(type)
+	}
+
+	// tab标签切换
+	const onChange = (newActiveKey: string) => {
+		setActiveKey(newActiveKey);
+	};
+
+	// tab标签增加删除
+	const onEdit = (
+		targetKey: React.MouseEvent | React.KeyboardEvent | string,
+		action: 'add' | 'remove',
+	) => {
+		if (action === 'add') {
+			add();
+		} else {
+			remove(targetKey);
+		}
+	};
+
+	// 添加tab标签
+	const add = () => {
+		const newActiveKey = `newTab${newTabIndex.current++}`;
+		const newPanes = [...items];
+		newPanes.push({ label: '新建接口', children: <NewInterface />, key: newActiveKey });
+		setItems(newPanes);
+		setActiveKey(newActiveKey);
+	};
+
+	// 删除tab标签
+	const remove = (targetKey: React.MouseEvent | React.KeyboardEvent | string) => {
+		const targetIndex = items.findIndex((item) => item.key === targetKey);
+		const newPanes = items.filter((item) => item.key !== targetKey);
+		if (newPanes.length && targetKey === activeKey) {
+			const { key } = newPanes[targetIndex === newPanes.length ? targetIndex - 1 : targetIndex];
+			setActiveKey(key);
+		}
+		setItems(newPanes);
+	};
+
 	return (
-		<div>
+		<div className={style.box}>
 			<Layout style={{ width: "100vw", height: "100vh" }}>
 				<Sider trigger={null}
 					style={{ background: 'white', }}
-					collapsed={collapsed}
+					collapsed={false}
 					width={250}
 				>
-					<div className="logoImg" >
-						个人项目
+					<div className={style.title}>
+						<SmileTwoTone />
+						&nbsp;个人项目
 					</div>
-					<Menu
-						mode="inline"
-						// openKeys={openKeys}
-						// onOpenChange={onOpenChange}
-						items={itemsMenuData}
-					/>
+					<div className={style.subtitle} onClick={() => showContent('project')}><LayoutTwoTone />&nbsp;项目概览</div>
+					<div className={style.subtitle} onClick={() => showContent('apiList')}><ApiTwoTone />&nbsp;接口管理</div>
+					<InterfaceTree items={items} setItems={setItems}/>
 				</Sider>
 				<Layout>
-					<Header
-						style={{
-							padding: 0,
-							background: colorBgContainer,
-						}}>
-						<Button
-							type="text"
-							icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-							onClick={() => setCollapsed(!collapsed)}
-							style={{
-								fontSize: '16px',
-								width: 64,
-								height: 64,
-							}}
-						/>
-						接口管理
-					</Header>
 					<Content
 						style={{
-							margin: '24px 16px',
-							padding: 24,
+							margin: '12px 16px',
+							padding: 12,
 							minHeight: 280,
 							background: colorBgContainer,
 						}}>
-						<InterfaceList/>
+						<Tabs
+							type="editable-card"
+							items={items}
+							activeKey={activeKey}
+							onChange={onChange}
+							onEdit={onEdit}
+						/>
 					</Content>
 				</Layout>
 			</Layout>

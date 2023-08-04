@@ -1,0 +1,27 @@
+.box {
+    .title {
+        text-align: center;
+        font-size: 24px;
+        border-bottom: 1px solid #ddd;
+        margin: 15px 0px;
+        padding-bottom: 15px;
+    }
+    .subtitle {
+        width: 100%;
+        height: 35px;
+        font-size: 18px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        line-height: 35px;
+        &:hover {
+            background: rgba(224, 241, 247, 0.4);
+        }
+    }  
+}
+
+:global {
+    .ant-tabs-nav-add {
+        min-height: 40px;
+    }
+}
