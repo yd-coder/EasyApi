@@ -11,9 +11,8 @@ const onFinishFailed = (errorInfo: any) => {
 }
 
 type FieldType = {
-	username?: string
-	password?: string
-	remember?: string
+	username: string
+	password: string
 }
 const LoginForm: React.FC = () => {
 	return (
