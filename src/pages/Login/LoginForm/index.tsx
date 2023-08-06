@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
 			</div>
 			<Form
 				name="basic"
-				style={{ paddingTop: 40, width: '30vw' }}
+				style={{ paddingTop: 10, width: '30vw' }}
 				className={styles.loginForm}
 				initialValues={{
 					remember: true
