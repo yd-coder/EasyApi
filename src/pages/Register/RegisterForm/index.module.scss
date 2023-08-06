@@ -24,4 +24,44 @@
 			font-size: 1.5rem;
 		}
 	}
+	.registerForm {
+		display: flex;
+		flex-direction: column;
+		p {
+			height: 2.4375rem;
+			font-size: 1rem;
+			font-weight: 600;
+			margin: 0;
+			padding-bottom: 0.5rem;
+		}
+		.registerInput {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 1rem 1.5rem;
+			height: 3rem;
+			border-radius: 0.5rem;
+		}
+		.registerButton {
+			display: flex;
+			margin: auto;
+			justify-content: center;
+			align-items: center;
+			width: 10rem;
+			height: 3rem;
+			background: #e2e1ec;
+			color: #45464f;
+			font-size: 1rem;
+			border-radius: 0.5rem;
+			p {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			&:hover {
+				background: #1677ff;
+				color: #ffffff;
+			}
+		}
+	}
 }
