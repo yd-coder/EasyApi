@@ -90,6 +90,7 @@ const Home: React.FC = () => {
 	return (
 		<div className={style.box}>
 			<Layout style={{ width: "100vw", height: "100vh" }}>
+				{/* 侧边栏 */}
 				<Sider trigger={null}
 					style={{ background: 'white', }}
 					collapsed={false}
@@ -101,8 +102,9 @@ const Home: React.FC = () => {
 					</div>
 					<div className={style.subtitle} onClick={() => showContent('project')}><LayoutTwoTone />&nbsp;项目概览</div>
 					<div className={style.subtitle} onClick={() => showContent('apiList')}><ApiTwoTone />&nbsp;接口管理</div>
-					<InterfaceTree items={items} setItems={setItems}/>
+					<InterfaceTree items={items} setItems={setItems} setActiveKey={setActiveKey}/>
 				</Sider>
+				{/* 右侧主要内容 */}
 				<Layout>
 					<Content
 						style={{
