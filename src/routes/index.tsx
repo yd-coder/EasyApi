@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Home from '@/pages/Home'
+import NewInterface from '@/pages/Home/NewInterfaceFile'
 // 定义路由对象类型
 type RouteObject = {
 	path: string
@@ -24,6 +25,12 @@ const routes: RouteObject[] = [
 		//主页面
 		path: '/home',
 		element: <Home />
+
+	},
+	{
+		// 新建接口
+		path:'/newInterface',
+		element:<NewInterface />,
 	},
 	// 路由重定向
 	{
