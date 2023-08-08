@@ -7,7 +7,7 @@ const { TreeNode } = Tree;
 
 // 后端返回的数据
 interface Props {
-  responsesProps: Response[];
+  props: Response[];
 }
 
 interface ResponseProps {
@@ -18,9 +18,9 @@ interface NodeProps {
   props: Node[];
 }
 
-const DetailsResponse: React.FC<Props> = ({ responsesProps }) => {
+const DetailsResponse: React.FC<Props> = ({ props }) => {
 	// 响应标签页
-  const items: TabsProps['items'] = responsesProps.map((response) => {
+  const items: TabsProps['items'] = props.map((response) => {
     return {
       key: response.id.toString(),
       label: `${response.name}(${response.statusCode})`,
@@ -31,7 +31,7 @@ const DetailsResponse: React.FC<Props> = ({ responsesProps }) => {
   return (
     <>
         <Title level={5}>返回响应</Title>
-        <Tabs defaultActiveKey={responsesProps[0].id.toString()} type="card" items={items} />
+        <Tabs defaultActiveKey={props[0].id.toString()} type="card" items={items} />
     </>
   );
 }

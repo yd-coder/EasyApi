@@ -13,7 +13,7 @@ const { Option } = Select;
 
 // 后端返回的数据
 interface Props {
-  interfaceProps: Interface;
+  props: Interface;
 }
 
 const responsesProps: Response[] = [{
@@ -189,7 +189,7 @@ const interfaceProps: Interface = {
 };
 
 // 打开接收参数接口
-// const DetailsInterface: React.FC<Props> = ({ interfaceProps }) => {
+// const DetailsInterface: React.FC<Props> = ({ props }) => {
 
 // 默认关闭接收参数接口
 const DetailsInterface: React.FC = () => {
@@ -291,8 +291,8 @@ const DetailsInterface: React.FC = () => {
 							{contextHolder}
 					</Space>
 					<DetailsMock />
-					<DetailsParam paramCategoriesProps={paramCategories} />
-					<DetailsResponse responsesProps={responses} />
+					<DetailsParam props={paramCategories} />
+					<DetailsResponse props={responses} />
 				</>
       );
 }

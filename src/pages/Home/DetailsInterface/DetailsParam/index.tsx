@@ -4,7 +4,7 @@ const { Title } = Typography;
 
 // 后端返回的数据
 interface Props {
-	paramCategoriesProps: Category[];
+	props: Category[];
 }
 
 interface CategoryProps {
@@ -15,12 +15,12 @@ interface ParamProps {
     props: Param;
 }
 
-const DetailsParam: React.FC<Props> = ({ paramCategoriesProps }) => {
+const DetailsParam: React.FC<Props> = ({ props }) => {
     return (
         <>
             <Title level={5}>请求参数</Title>
             <Space direction='vertical' style={{width: "100%"}}>
-                {paramCategoriesProps.map(category => <CategoryDetail key={category.id} props={category} />)}
+                {props.map(category => <CategoryDetail key={category.id} props={category} />)}
             </Space>
         </>
     );
