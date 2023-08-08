@@ -3,7 +3,7 @@ import {
 	ApiTwoTone,
 	SmileTwoTone
 } from '@ant-design/icons';
-import { Layout, theme, Tabs } from 'antd';
+import { Layout, theme, Tabs, Modal, Form, Input } from 'antd';
 import InterfaceList from './InterfaceList';
 import style from './index.module.scss'
 import InterfaceTree from './InterfaceTree';
@@ -87,6 +87,31 @@ const Home: React.FC = () => {
 		setItems(newPanes);
 	};
 
+	// 新增目录
+	const addDirectory = (e:any)=>{
+		e.stopPropagation()
+		Modal.confirm({
+            title: "新建目录",
+            okText:'确定',
+            cancelText:'取消',
+            centered: true,
+            content: (
+                <Form>
+                    <Form.Item
+                        label="目录名称"
+                        name="name"
+                        rules={[{required: true,message: '请输入目录名称'},]}
+                    >    
+                        <Input />
+                    </Form.Item>
+                </Form>
+            ),
+            async onOk() {
+                // 新建目录成功操作
+            },
+        });
+	}
+
 	return (
 		<div className={style.box}>
 			<Layout style={{ width: "100vw", height: "100vh" }}>
@@ -101,8 +126,8 @@ const Home: React.FC = () => {
 						&nbsp;个人项目
 					</div>
 					<div className={style.subtitle} onClick={() => showContent('project')}><LayoutTwoTone />&nbsp;项目概览</div>
-					<div className={style.subtitle} onClick={() => showContent('apiList')}><ApiTwoTone />&nbsp;接口管理</div>
-					<InterfaceTree items={items} setItems={setItems} setActiveKey={setActiveKey}/>
+					<div className={style.subtitle} onClick={() => showContent('apiList')}><ApiTwoTone />&nbsp;接口管理 <span className={style.add} onClick={(e)=>addDirectory(e)}>+</span></div>
+					<InterfaceTree items={items} setItems={setItems} setActiveKey={setActiveKey} />
 				</Sider>
 				{/* 右侧主要内容 */}
 				<Layout>

@@ -16,8 +16,24 @@
         line-height: 35px;
         &:hover {
             background: rgba(224, 241, 247, 0.4);
+            .add {
+                display: block;
+            }
         }
-    }  
+        .add {
+            box-sizing: border-box;
+            width: 30px;
+            height: 100%;
+            float: right;
+            margin-right: 5px;
+            text-align: center;
+            border-radius: 6px;
+            display: none;
+            &:hover {
+                background-color: #ddeaf6;
+            }
+        }  
+    }
 }
 
 :global {
