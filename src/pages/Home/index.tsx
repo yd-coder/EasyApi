@@ -3,7 +3,7 @@ import {
 	ApiTwoTone,
 	SmileTwoTone
 } from '@ant-design/icons';
-import { Layout, theme, Tabs, Modal, Form, Input } from 'antd';
+import { Layout, theme, Tabs, Modal, Form, Input, Popover } from 'antd';
 import InterfaceList from './InterfaceList';
 import style from './index.module.scss'
 import InterfaceTree from './InterfaceTree';
@@ -27,12 +27,11 @@ const initialItems: items[] = [
 
 const Home: React.FC = () => {
 
-	const {
-		token: { colorBgContainer },
-	} = theme.useToken();
-
 	const [activeKey, setActiveKey] = useState(initialItems[0].key);
+	// 右侧tab栏数据
 	const [items, setItems] = useState(initialItems);
+	// 控制新建目录的模态框是否打开
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const newTabIndex = useRef(0);
 
 	// 点击左侧的目录 tab标签跟着切换
@@ -90,31 +89,22 @@ const Home: React.FC = () => {
 	// 新增目录
 	const addDirectory = (e:any)=>{
 		e.stopPropagation()
-		Modal.confirm({
-            title: "新建目录",
-            okText:'确定',
-            cancelText:'取消',
-            centered: true,
-            content: (
-                <Form>
-                    <Form.Item
-                        label="目录名称"
-                        name="name"
-                        rules={[{required: true,message: '请输入目录名称'},]}
-                    >    
-                        <Input />
-                    </Form.Item>
-                </Form>
-            ),
-            async onOk() {
-                // 新建目录成功操作
-            },
-        });
+		setIsModalOpen(true)
 	}
+
+	// 确定新增目录
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+	
+	// 取消新增目录
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 
 	return (
 		<div className={style.box}>
-			<Layout style={{ width: "100vw", height: "100vh" }}>
+			<Layout >
 				{/* 侧边栏 */}
 				<Sider trigger={null}
 					style={{ background: 'white', }}
@@ -126,18 +116,14 @@ const Home: React.FC = () => {
 						&nbsp;个人项目
 					</div>
 					<div className={style.subtitle} onClick={() => showContent('project')}><LayoutTwoTone />&nbsp;项目概览</div>
-					<div className={style.subtitle} onClick={() => showContent('apiList')}><ApiTwoTone />&nbsp;接口管理 <span className={style.add} onClick={(e)=>addDirectory(e)}>+</span></div>
+					<div className={style.subtitle} onClick={() => showContent('apiList')}><ApiTwoTone />&nbsp;接口管理
+						<Popover content='新建目录' ><span className={style.add} onClick={(e)=>addDirectory(e)}>+</span></Popover>
+					</div>
 					<InterfaceTree items={items} setItems={setItems} setActiveKey={setActiveKey} />
 				</Sider>
 				{/* 右侧主要内容 */}
 				<Layout>
-					<Content
-						style={{
-							margin: '12px 16px',
-							padding: 12,
-							minHeight: 280,
-							background: colorBgContainer,
-						}}>
+					<Content className={style.content}>
 						<Tabs
 							type="editable-card"
 							items={items}
@@ -148,6 +134,18 @@ const Home: React.FC = () => {
 					</Content>
 				</Layout>
 			</Layout>
+			{/* 新建目录的模态框 */}
+			<Modal title="新建目录" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} cancelText='取消' okText='确定' centered>
+					<Form>
+                    	<Form.Item
+                        	label="目录名称"
+                        	name="name"
+                        	rules={[{required: true,message: '请输入目录名称'},]}
+                    	>    
+                        	<Input />
+                    	</Form.Item>
+                </Form>
+         	</Modal>
 		</div>
 	)
 }
