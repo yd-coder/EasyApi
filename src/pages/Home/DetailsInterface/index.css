@@ -1,0 +1,38 @@
+.flex, .interfaceContentTwo, .responseContent {
+	display: flex;
+}
+
+.flex {
+	justify-content: space-between;
+}
+
+.interfaceContentTwo > div {
+	margin-right: 15px;
+}
+
+.responseContent > div {
+	margin-right: 25px;
+}
+
+span.left {
+	color: #797D86;
+	margin-right: 8px;
+}
+
+span.right {
+	color: #404653;
+}
+
+.colorOne {
+	font-size: 12px;
+	color: #797D86;
+}
+
+.colorTwo {
+	font-weight: 500;
+	color: #666B90;
+}
+
+.documentView {
+	overflow-y: hidden;
+}
