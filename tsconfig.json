@@ -23,6 +23,10 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"],
+	"include": [
+		"src",
+		//  *.module.scss 模块全局声明文件
+		"global.d.ts"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
