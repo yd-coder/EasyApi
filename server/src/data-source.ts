@@ -1,11 +1,11 @@
 import { DataSource } from 'typeorm'
-const { database, host, password } = require('./configs/mysql')
+const { database, host, password, user } = require('./configs/mysql')
 
 export const AppDataSource = new DataSource({
 	type: 'mysql', // 数据库类型
 	host, // 连接域名
 	port: 3306, // 连接端口
-	username: 'root', // 用户名
+	username: user, // 用户名
 	password, // 密码
 	database, // 数据库名
 	logging: false, // 是否有日志

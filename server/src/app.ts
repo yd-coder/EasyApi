@@ -3,6 +3,7 @@ import { AppDataSource } from './data-source'
 const express = require('express')
 // const projectRoute = require('./routes/Project');
 const interfaceRoute = require('./routes/Interface')
+const userRoute = require('./routes/User')
 
 const app = express()
 
@@ -24,6 +25,8 @@ AppDataSource.initialize()
 		// router.post('/interface/create', interface_controller.create)
 		// router.post('/modify', interface_controller.modify)
 		// router.post('/remove', interface_controller.remove)
+
+		app.use('/user', userRoute)
 
 		// 目前 登录注册测了，解析token与获取id没有测试，应该是没有问题的，有问题直接call me
 
