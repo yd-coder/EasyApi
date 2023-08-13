@@ -1,28 +1,32 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { Interface } from './Interface'
 
 @Entity()
-export default class Project {
-	@PrimaryGeneratedColumn()
-	id: string = ''
+export class Project {
+	@PrimaryGeneratedColumn('uuid')
+	id: string
 
-	@Column()
-	logo: string = ''
+	@Column({ default: '' })
+	logo: string
 
-	@Column()
-	title: string = ''
+	@Column({ default: '' })
+	title: string
 
-	@Column()
-	subTitle: string = ''
+	@Column({ default: '' })
+	subTitle: string
 
-	@Column()
-	summarize: string = ''
+	@OneToMany(() => Interface, (interfaces) => interfaces.project)
+	interfaces: Interface[]
 
-	@Column()
-	createdAt: string = ''
+	@Column({ default: '' })
+	desc: string
 
-	@Column()
-	updatedAt: string = ''
+	@Column('bigint')
+	createdAt: number
 
-	@Column({ default: null })
-	deletedAt: string = ''
+	@Column({ type: 'bigint', default: 0 })
+	updatedAt: number
+
+	@Column({ type: 'bigint', default: 0 })
+	deletedAt: number
 }

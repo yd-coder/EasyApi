@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
 	password, // 密码
 	database, // 数据库名
 	logging: false, // 是否有日志
-	synchronize: true, // 是否自动建表
+	synchronize: false, // 是否自动建表
 	entities: [__dirname + '/entities/*{.ts,.Error}'], // entity/model存放位置
 	timezone: 'z', // 以本地时区时间为主
 	subscribers: [],

@@ -1,9 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	ManyToOne,
+	JoinColumn
+} from 'typeorm'
+import { Project } from './Project'
 
 @Entity()
 export class Interface {
 	@PrimaryGeneratedColumn('uuid')
-	id: string = ''
+	id: string
 
 	@Column()
 	path: string = '' // 请求接口
@@ -17,15 +24,11 @@ export class Interface {
 	@Column()
 	method: string = '' // 请求方式
 
-	// @Column('json', { array: true }) // 使用 JSON 列类型，并设置 array: true
 	@Column()
 	params: string = ''
-	//
-	// @Column()
-	// body: array[] = [] // 请求内容
-	//
-	// @Column()
-	// tags: Array[] = [] // 接口标签
+
+	@Column()
+	body: string = '' // 请求内容
 
 	@Column()
 	state: number = 0 // 接口开发状态
@@ -33,8 +36,11 @@ export class Interface {
 	@Column()
 	catalog: string = '' // 目录
 
+	@ManyToOne(() => Project, (project) => project.interfaces)
+	@JoinColumn()
+	project: Project
+
 	@Column('simple-array')
-	// @Column({array: true})
 	tags: string[]
 
 	@Column({ default: '' })

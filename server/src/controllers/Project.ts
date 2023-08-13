@@ -1,10 +1,39 @@
-const getManager = require('typeorm')
-const Project = require('../entities/Project')
+import { AppDataSource } from '../data-source'
+import { Interface } from '../entities/Interface'
+const { Project } = require('../entities/Project')
 const { ApiResponse } = require('../utils/response')
 
+async function find(projectId?: string) {
+	const projectRepository = AppDataSource.getRepository(Project)
+	let allProject = null
+	if (projectId) {
+		allProject = await projectRepository.findOne({ where: { id: projectId } })
+	} else {
+		allProject = await projectRepository.find()
+	}
+	return allProject
+}
+
+async function check(req, res) {
+	const { projectId } = req.params
+	const allProject = await find(projectId)
+	let business_code: number = 0
+	let business_msg: string = '项目查询成功'
+	let business_data = allProject
+	if (!allProject) {
+		business_msg = '项目查询失败'
+	}
+	const result = new ApiResponse({
+		business_code,
+		business_msg,
+		business_data
+	}).toJSON()
+	res.send(result)
+}
+
 async function create(req, res) {
-	const { logo, title, subTitle, summarize } = req.params
-	const projectRepository = getManager().getRepository(Project)
+	const { logo, title, subTitle, desc } = req.body
+	const projectRepository = AppDataSource.getRepository(Project)
 	const findProject = await projectRepository.findOne({ where: { title } })
 	let business_code: number = 0
 	let business_msg: string = ''
@@ -14,41 +43,80 @@ async function create(req, res) {
 		business_msg = '项目已存在，请重新创建'
 	} else {
 		const saveProject = new Project()
-		saveProject.id = saveProject.logo = logo || ''
-		saveProject.title = title
+		saveProject.logo = logo || ''
+		saveProject.title = title || ''
 		saveProject.subTitle = subTitle || ''
-		saveProject.summarize = summarize || ''
-		saveProject.createdAt = new Date()
+		saveProject.desc = desc || ''
+		saveProject.createdAt = new Date().getTime()
 		await projectRepository.save(saveProject)
 		business_msg = '项目创建成功'
+		business_data = saveProject
 	}
 
-	res.send(new ApiResponse({ business_code, business_msg, business_data }))
+	const result = new ApiResponse({
+		business_code,
+		business_msg,
+		business_data
+	}).toJSON()
+	res.send(result)
 }
 
 async function modify(req, res) {
-	const { logo, title, subTitle, summarize } = req.params
-	const projectRepository = getManager().getRepository(Project)
-	const findProject = await projectRepository.findOne({ where: { title } })
+	const { projectId, logo, title, subTitle, desc } = req.body
+
 	let business_code: number = 0
 	let business_msg: string = ''
-	let business_data = { isLogin: false }
+	let business_data = {}
 
-	if (!findProject) {
-		business_msg = '项目不存在'
-	} else {
-		findProject.logo = logo
-		findProject.title = title
-		findProject.subTitle = subTitle
-		findProject.summarize = summarize
-		findProject.updatedAt = new Date()
-		await projectRepository.save(findProject)
+	try {
+		const projectRepository = AppDataSource.getRepository(Project)
+		const modifyProject = await projectRepository.findOne({
+			where: { id: projectId }
+		})
+		modifyProject.logo = logo
+		modifyProject.title = title
+		modifyProject.subTitle = subTitle
+		modifyProject.desc = desc
+		modifyProject.updatedAt = new Date().getTime()
+		await projectRepository.save(modifyProject)
 		business_msg = '项目信息修改成功'
+		business_data = modifyProject
+	} catch (error) {
+		business_msg = '项目信息修改失败'
 	}
 
-	res.send(new ApiResponse({ business_code, business_msg, business_data }))
+	const result = new ApiResponse({
+		business_code,
+		business_msg,
+		business_data
+	}).toJSON()
+	res.send(result)
 }
 
-async function remove() {}
+async function remove(req, res) {
+	const { projectId } = req.body
+	const projectRepository = AppDataSource.getRepository(Project)
+	const interfaceRepository = AppDataSource.getRepository(Interface)
+	let business_code: number = 0
+	let business_msg: string = '项目删除成功'
+	let business_data = {}
 
-export { create, modify, remove }
+	// 先删除带外键的副表的数据
+	const deleteInterface = await interfaceRepository
+		.createQueryBuilder('interface')
+		.leftJoinAndSelect('interface.project', 'project.interfaces')
+		.where('interface.project = :projectId', { projectId })
+		.getMany()
+	deleteInterface && (await interfaceRepository.remove(deleteInterface))
+	// 然后再删除主表的数据
+	await projectRepository.delete({ id: projectId })
+
+	const result = new ApiResponse({
+		business_code,
+		business_msg,
+		business_data
+	}).toJSON()
+	res.send(result)
+}
+
+export { check, create, modify, remove }

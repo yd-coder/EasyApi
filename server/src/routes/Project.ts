@@ -6,9 +6,10 @@ const project_controller = require('../controllers/Project')
 
 /// 用户路由 ///
 
-router.post('/create', project_controller.create)
-router.post('/modify', project_controller.modify)
-router.post('/remove', project_controller.remove)
-// router.post('/find', project_controller.find)
+router.get('/', project_controller.check)
+router.get('/:projectId', project_controller.check)
+router.post('/', project_controller.create)
+router.put('/', project_controller.modify)
+router.delete('/', project_controller.remove)
 
 module.exports = router
