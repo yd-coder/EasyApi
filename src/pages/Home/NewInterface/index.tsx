@@ -13,6 +13,8 @@ import GroupInput from '@/components/GroupInput'
 import type { TabsProps } from 'antd'
 import DynamicForm from './QueryComponent/DynamicForm'
 import ReturnResponseTab from './ReturnResponseTab'
+import { useLocation } from 'react-router-dom';
+import BodyComponent from './QueryComponent/BodyComponent'
 
 const { TextArea } = Input
 
@@ -36,6 +38,12 @@ interface NewInterfaceProps {
 
 
 const NewInterface: React.FC<NewInterfaceProps | any> = () => {
+
+	const location = useLocation();
+
+	// 根据当前路径选择是否展示组件
+	const showRouteButton = location.pathname === '/change';
+
 	// 下拉列表选择框 状态
 	const options = [
 		{
@@ -67,7 +75,6 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 			label: 'PATCH'
 		}
 	]
-
 	// 搜索选择框数据 责任人
 	const [values] = useState<ValueItem[]>([
 		{
@@ -75,7 +82,6 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 			label: 'JOBT001'
 		}
 	])
-
 	// 标签选择框数据 标签
 	const [labelOptions] = useState<ValueItem[]>([
 		{
@@ -83,7 +89,6 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 			label: '宠物'
 		}
 	])
-
 	// 分组选择框数据 服务（url设置）
 	const groupOptions: GroupOption[] = [
 		{
@@ -96,35 +101,42 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 		}
 	]
 
+
+	// 请求参数 Params Body Cookie Header
 	const tabItems: TabsProps['items'] = [
 		{
 			key: '1',
 			label: `Params`,
-			children: <DynamicForm />
+			children: <DynamicForm tabKey="1" />
 		},
 		{
 			key: '2',
 			label: `Body`,
-			children: <DynamicForm />
+			children: <BodyComponent />
 		},
 		{
 			key: '3',
 			label: `Cookie`,
-			children: <DynamicForm />
+			children: <DynamicForm tabKey="3" />
 		},
 		{
 			key: '4',
 			label: `Header`,
-			children: <DynamicForm />
+			children: <DynamicForm tabKey="4" />
 		}
 	]
 
+
+	const currentPath = location.pathname;
+  
 	const handleChange = (value: string) => {
+		console.log(currentPath);
+		
 		console.log(`selected ${value}`)
 	}
 
 	const onChange = (key: string) => {
-		console.log(key)
+	
 	}
 
 	return (
@@ -137,6 +149,9 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 				<Button type="primary" className="input-item submit-btn">
 					保存
 				</Button>
+				<div>
+      			{showRouteButton ? <RouteButton /> : '' }
+    		</div>
 			</div>
 			<div className="form-context">
 				<Input placeholder="未命名接口" className="head-input-bar" />
@@ -183,7 +198,7 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 				</div>
 				<div className="description-input-text">
 					<div className="description-input-span">说明</div>
-					<TextArea rows={4} placeholder="接口说明" maxLength={6} />
+					<TextArea showCount maxLength={20} placeholder="接口说明(不超过20字)" />
 				</div>
 				<div className="query-params-form">
 					<div className="query-params-form-span">请求参数</div>
@@ -199,5 +214,16 @@ const NewInterface: React.FC<NewInterfaceProps | any> = () => {
 		</div>
 	)
 }
+
+const RouteButton :  React.FC = () =>{
+	return(
+			<div className={styles['route-button']}>
+				<Button className="input-item submit-btn">运行</Button>
+				<Button className="input-item submit-btn">取消</Button>
+			</div>
+	)
+}
+
+
 
 export default NewInterface

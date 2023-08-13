@@ -8,8 +8,13 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Space } from 'antd'
 import styles from './index.module.scss'
 
-const DynamicForm: React.FC = () => {
-	const [form] = Form.useForm()
+interface DynamicFormProps {
+	tabKey: string; // 或者根据实际情况定义类型
+}
+  
+
+const DynamicForm: React.FC<DynamicFormProps> = (props) => {
+	const { tabKey } = props
 
 	const onFinish = (values: any) => {
 		console.log('Received values of form:', values)
@@ -17,8 +22,7 @@ const DynamicForm: React.FC = () => {
 
 	return (
 		<Form
-			form={form}
-			name="dynamic_form_complex"
+			name={`dynamic_form_complex_${tabKey}`}
 			onFinish={onFinish}
 			style={{ width: '100%' }}
 			autoComplete="off"
@@ -34,20 +38,19 @@ const DynamicForm: React.FC = () => {
 							>
 										<Form.Item
 											{...field}
-											key={'name'+field.key}
+											key={tabKey+'name'+field.key}
 											label="参数名"
-											name={[field.name, 'name']}
+											name={[field.name, tabKey, 'name', field.key]}
 											rules={[{ required: true, message: 'Missing price' }]}
 											className="list-layout-item"
-											// labelCol={{span:3}}
 										>
 											<Input />
 										</Form.Item>
 										<Form.Item
 											{...field}
-											key={'type'+field.key}
+											key={tabKey+'type'+field.key}
 											label="类型"
-											name={[field.name, 'type']}
+											name={[field.name, tabKey, 'type', field.key]}
                                             className="list-layout-item"
 										>
 											<Input />
@@ -55,9 +58,9 @@ const DynamicForm: React.FC = () => {
 		
 										<Form.Item
 											{...field}
-											key={'example'+field.key}
+											key={tabKey+'example'+field.key}
 											label="示例值"
-											name={[field.name, 'example']}
+											name={[field.name, tabKey, 'example', field.key]}
 											className="list-layout-item"
 										>
 											<Input />
@@ -65,9 +68,9 @@ const DynamicForm: React.FC = () => {
 							
 										<Form.Item
 											{...field}
-											key={'description'+field.key}
+											key={tabKey+'description'+field.key}
 											label="说明"
-											name={[field.name, 'description']}
+											name={[field.name, tabKey, 'description', field.key]}
 											className="list-layout-item"
 										>
 											<Input />
