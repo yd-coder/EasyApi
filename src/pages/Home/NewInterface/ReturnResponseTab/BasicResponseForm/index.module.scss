@@ -1,0 +1,28 @@
+.basic-response {
+    display: flex;
+    flex-direction: column;
+
+	:global {
+		.basic-response-form {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			// .body-item{
+			//     flex: 1;
+			// }
+
+			.input-bar {
+				background-color: antiquewhite;
+			}
+
+			.select-controled-item {
+				background-color: azure;
+			}
+
+			.tip-text {
+				text-align: center;
+			}
+		}
+	}
+}
