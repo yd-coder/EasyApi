@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Home from '@/pages/Home'
+import NewInterface from '@/pages/Home/NewInterface'
 // 定义路由对象类型
 type RouteObject = {
 	path: string
