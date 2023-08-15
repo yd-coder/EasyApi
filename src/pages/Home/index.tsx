@@ -3,7 +3,7 @@ import {
 	ApiTwoTone,
 	SmileTwoTone
 } from '@ant-design/icons';
-import { Layout, theme, Tabs, Modal, Form, Input, Popover } from 'antd';
+import { Layout,Tabs, Modal, Form, Input, Popover } from 'antd';
 import InterfaceList from './InterfaceList';
 import style from './index.module.scss'
 import InterfaceTree from './InterfaceTree';
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
 
 	return (
 		<div className={style.box}>
-			<Layout >
+			<Layout style={{width: '100vw',height: '100vh'}}>
 				{/* 侧边栏 */}
 				<Sider trigger={null}
 					style={{ background: 'white', }}
