@@ -1,0 +1,14 @@
+.form-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    :global{
+         .tip-info{
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    }
+}

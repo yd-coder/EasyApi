@@ -1,0 +1,20 @@
+.basic-response {
+	display: flex;
+	flex-direction: column;
+
+	:global {
+		.info-bar {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+
+			.tip-text {
+				text-align: center;
+				font-size: 15px;
+				margin: 10px 0;
+				letter-spacing: 1.5px;
+			}
+		}
+		
+	}
+}

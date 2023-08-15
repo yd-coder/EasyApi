@@ -67,7 +67,7 @@ const InterfaceTree: React.FC<interfaceProps> = (props: interfaceProps) => {
             newPanes.label = info.node.title
             const newItems = [...props.items]
             props.setItems(newItems)
-            props.setActiveKey("apiList"); 
+            props.setActiveKey("apiList");
         }else {
             const activeKey = selectKey[0];
             // 查找一下接口是否在tab展示，没有就新建一个tab栏
@@ -77,7 +77,7 @@ const InterfaceTree: React.FC<interfaceProps> = (props: interfaceProps) => {
 		        newPanes.push({ label: info.node.title, children: <InterfaceView />, key: activeKey });
 		        props.setItems(newPanes);
             }
-            props.setActiveKey(activeKey); 
+            props.setActiveKey(activeKey);
         }
     };
 
@@ -90,7 +90,7 @@ const InterfaceTree: React.FC<interfaceProps> = (props: interfaceProps) => {
         const newPanes = [...props.items];
 		newPanes.push({ label: "新建接口", children: <NewInterface />, key: newActiveKey });
 		props.setItems(newPanes);
-        props.setActiveKey(newActiveKey); 
+        props.setActiveKey(newActiveKey);
     }
 
     // 重命名接口
@@ -107,7 +107,7 @@ const InterfaceTree: React.FC<interfaceProps> = (props: interfaceProps) => {
                         label="名称"
                         name="name"
                         rules={[{required: true,message: '请输入名称'},]}
-                    >    
+                    >
                         <Input />
                     </Form.Item>
                 </Form>
