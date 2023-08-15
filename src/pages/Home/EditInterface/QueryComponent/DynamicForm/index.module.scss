@@ -1,0 +1,17 @@
+.list-layout{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    :global{
+        .list-layout-item{
+            flex: 1;
+            // flex-basis: 25%;
+            min-width: 100px;
+            max-width: 600px;
+            // min-width: 600px;
+        }
+
+    }
+}

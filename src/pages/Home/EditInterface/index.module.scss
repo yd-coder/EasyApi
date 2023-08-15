@@ -1,0 +1,127 @@
+@import '@/assets/css/mixin.scss';
+
+$width: calc(100% - 155px);
+
+// 修改文档页 该页面包括: 顶部接口路径输入框 , 表单
+.form-body {
+	display: flex;
+	flex-direction: column;
+
+	:global {
+		// 页面顶部接口路径输入框
+		.header-input {
+			flex-basis: 10%;
+			width: 100%;
+			padding: 30px 80px;
+			display: flex;
+			justify-content: flex-end;
+
+			// 带有下拉选择框的输入框组件样式 antd
+			.input-item {
+				flex: 1;
+			}
+
+			.input-component {
+				flex-basis: 90%;
+				display: flex;
+			}
+			// 提交按钮
+			.submit-btn {
+				flex-basis: 10%;
+				max-width: 80px;
+				margin-left: 20px;
+			}
+		}
+
+		// 表单域
+		.form-context {
+			flex-basis: 90%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+
+			.form-body-item {
+				flex: 1;
+			}
+
+			// 表单头部输入框 (接口命名)
+			.head-input-bar {
+				flex-basis: 10%;
+				margin: 0 auto;
+				// padding-right: 80px;
+				width: $width;
+			}
+
+			// 一行四列的表单组(状态、责任人、标签、服务)
+			.choose-input {
+				flex-basis: 20%;
+				width: $width;
+				margin: 20px auto;
+				display: flex;
+				justify-content: space-between;
+
+				// 四个输入框组合的顶部说明标签
+				.input-span {
+					margin: 10px auto;
+				}
+
+				// 控制四个输入框的间距
+				.choose-input-item {
+					flex-grow: 1;
+					flex-basis: 25%;
+					margin: 0 1%;
+				}
+
+				//去除第一个和最后一个列的左右间距
+				.choose-input-item:first-child,
+				.choose-input-item:last-child {
+					margin: 0;
+				}
+
+				// 输入框组 : 第一个输入框前的*符号
+				.status-input-sapn::before {
+					display: inline-block;
+					margin-right: 4px;
+					content: '*';
+					color: red;
+				}
+			}
+
+			// 接口说明文本域.
+			.description-input-text {
+				flex-basis: 20%;
+				margin: 5px auto;
+				width: $width;
+
+				// 接口说明标签
+				.description-input-span {
+					margin: 10px auto;
+				}
+			}
+
+			// 请求参数表单
+			.query-params-form {
+				flex-basis: 50%;
+				width: $width;
+				display: flex;
+				// background-color: aquamarine;
+				margin: 0 auto;
+				flex-direction: column;
+
+				.query-params-form-span{
+					flex-basis: 10%;
+					width: $width;
+					margin:10px 0;
+				}
+
+				.query-params-form-selector{
+
+				}
+			}
+
+		}
+	}
+}
+.route-button{
+	display:flex;
+}
