@@ -26,11 +26,6 @@ const routes: RouteObject[] = [
 		path: '/home',
 		element: <Home />
 	},
-	{
-		// 新建接口页面
-		path:'/new',
-		element: <NewInterface />
-	},
 	// 路由重定向
 	{
 		path: '/',
