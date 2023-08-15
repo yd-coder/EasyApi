@@ -2,6 +2,7 @@ import { Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import DetailsInterface from '../DetailsInterface'
 import RunInterface from '../RunInterface'
+import NewInterface from '../NewInterface'
 
 const items: TabsProps['items'] = [
 	{
@@ -15,7 +16,7 @@ const items: TabsProps['items'] = [
 	{
 		key: '2',
 		label: `修改文档`,
-		children: `Content of Tab Pane 2`
+		children: <NewInterface/>
 	},
 	{
 		key: '3',
