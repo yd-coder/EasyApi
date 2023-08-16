@@ -16,7 +16,7 @@
 
 span.left {
 	color: #797D86;
-	margin-right: 8px;
+	margin-right: 0.5em;
 }
 
 span.right {
@@ -35,4 +35,27 @@ span.right {
 
 .documentView {
 	overflow-y: hidden;
+}
+
+.gutter-horizontal:hover {
+	cursor: e-resize;
+}
+
+.splitLeft {
+	border-radius: 8px 0 0 0;
+	border-left: 1px solid #f0f0f0;
+	border-top: 1px solid #f0f0f0;
+	flex: 1 1 0;
+}
+
+.splitRight {
+	border-radius: 0 8px 0 0;
+	border-right: 1px solid #f0f0f0;
+	border-top: 1px solid #f0f0f0;
+	flex: 1 1 0;
+}
+
+.splitLeft .title, .splitRight .title {
+	padding: 0.5em;
+	border-bottom: 1px solid #f0f0f0;
 }

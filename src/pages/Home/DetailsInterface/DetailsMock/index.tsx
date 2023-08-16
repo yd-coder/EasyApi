@@ -1,6 +1,7 @@
 import { Typography, Button, Space, Table } from "antd";
 import type { ColumnsType } from 'antd/es/table';
 import { Mock } from '../interfaceDef';
+import { inherits } from "util";
 
 const { Title } = Typography;
 
@@ -50,12 +51,12 @@ const mockProps = [{
 const DetailsMock: React.FC = () => {
     return (
         <>
-            <Title level={5}>Mock</Title>
-            <Space>
-                <Button>本地Mock</Button>
-                <Button>云端Mock</Button>
-            </Space>
-            <Table columns={columns} dataSource={mockProps} />
+            <Title level={5} style={{marginTop: '0.5em'}}>Mock</Title>
+						<Space style={{marginBottom: '0.5em'}}>
+								<Button>本地Mock</Button>
+								<Button>云端Mock</Button>
+						</Space>
+						<Table columns={columns} dataSource={mockProps} />
         </>
     );
 }

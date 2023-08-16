@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ThunderboltOutlined, CodeOutlined } from '@ant-design/icons';
-import { Button, Tag, Space, Select, Badge, Typography, message } from 'antd';
+import { Button, Tag, Space, Select, Badge, Typography, message, Popconfirm } from 'antd';
 import DetailsMock from "./DetailsMock";
 import DetailsParam from "./DetailsParam";
 import DetailsResponse from "./DetailsResponse";
@@ -13,7 +13,8 @@ const { Option } = Select;
 
 // 后端返回的数据
 interface Props {
-  props: Interface;
+  // props: Interface;
+	onRunClick: (value: string) => void;
 }
 
 const responsesProps: Response[] = [{
@@ -21,7 +22,7 @@ const responsesProps: Response[] = [{
   name: "成功",
   statusCode: 200,
   contentFormat: "JSON",
-  nodes: [{
+  node: {
     id: 1,
     name: "node1",
     type: "integer",
@@ -37,6 +38,32 @@ const responsesProps: Response[] = [{
       desc: "状态码",
       isRequired: "true",
       allowNull: "true",
+			child: [{
+				id: 4,
+				name: "data4",
+				type: "object(Pet)",
+				chineseName: "",
+				desc: "宠物信息",
+				isRequired: "true",
+				allowNull: "false",
+				child: [{
+					id: 5,
+					name: "id5",
+					type: "integer",
+					chineseName: "",
+					desc: "宠物ID编号",
+					isRequired: "false",
+					allowNull: "false",
+				}, {
+					id: 6,
+					name: "name6",
+					type: "string",
+					chineseName: "名称",
+					desc: "名称",
+					isRequired: "false",
+					allowNull: "true",
+				}]
+			}]
     }, {
       id: 3,
       name: "node3",
@@ -46,39 +73,14 @@ const responsesProps: Response[] = [{
       isRequired: "true",
       allowNull: "true",
     }]
-  }, {
-    id: 4,
-    name: "data4",
-    type: "object(Pet)",
-    chineseName: "",
-    desc: "宠物信息",
-    isRequired: "true",
-    allowNull: "false",
-    child: [{
-      id: 5,
-      name: "id5",
-      type: "integer",
-      chineseName: "",
-      desc: "宠物ID编号",
-      isRequired: "false",
-      allowNull: "false",
-    }, {
-      id: 6,
-      name: "name6",
-      type: "string",
-      chineseName: "名称",
-      desc: "名称",
-      isRequired: "false",
-      allowNull: "true",
-    }]
-  }]
+  }
 }, {
   id: 2,
   name: "失败",
   statusCode: 400,
   contentFormat: "JSON",
-  nodes: [{
-    id: 1,
+  node: {
+    id: 7,
     name: "node11",
     type: "integer",
     chineseName: "结点",
@@ -86,7 +88,7 @@ const responsesProps: Response[] = [{
     isRequired: "true",
     allowNull: "true",
     child: [{
-      id: 2,
+      id: 8,
       name: "node22",
       type: "integer",
       chineseName: "结点",
@@ -94,40 +96,41 @@ const responsesProps: Response[] = [{
       isRequired: "true",
       allowNull: "true",
     }, {
-      id: 3,
+      id: 9,
       name: "node33",
       type: "integer",
       chineseName: "结点",
       desc: "状态码",
       isRequired: "true",
       allowNull: "true",
+			child: [{
+				id: 10,
+				name: "data44",
+				type: "object(Pet)",
+				chineseName: "",
+				desc: "宠物信息",
+				isRequired: "true",
+				allowNull: "false",
+				child: [{
+					id: 11,
+					name: "id55",
+					type: "integer",
+					chineseName: "",
+					desc: "宠物ID编号",
+					isRequired: "false",
+					allowNull: "false",
+				}, {
+					id: 12,
+					name: "name66",
+					type: "string",
+					chineseName: "名称",
+					desc: "名称",
+					isRequired: "true",
+					allowNull: "true",
+				}]
+			}]
     }]
-  }, {
-    id: 4,
-    name: "data44",
-    type: "object(Pet)",
-    chineseName: "",
-    desc: "宠物信息",
-    isRequired: "true",
-    allowNull: "false",
-    child: [{
-      id: 5,
-      name: "id55",
-      type: "integer",
-      chineseName: "",
-      desc: "宠物ID编号",
-      isRequired: "false",
-      allowNull: "false",
-    }, {
-      id: 6,
-      name: "name66",
-      type: "string",
-      chineseName: "名称",
-      desc: "名称",
-      isRequired: "true",
-      allowNull: "true",
-    }]
-  }]
+  }
 }];
 
 const categoriesProps: Category[] = [{id: 1, name: "Query", params: [{
@@ -145,14 +148,14 @@ const categoriesProps: Category[] = [{id: 1, name: "Query", params: [{
 	isRequired: "false",
 	exampleValue: "女"
 }]}, {id: 2, name: "Path", params: [{
-	id: 1,
+	id: 3,
 	name: "petId",
 	type: "integer",
 	desc: "宠物ID",
 	isRequired: "true",
 	exampleValue: "123"
 }, {
-	id: 2,
+	id: 4,
 	name: "petCategories",
 	type: "string",
 	desc: "宠物类别",
@@ -163,7 +166,7 @@ const categoriesProps: Category[] = [{id: 1, name: "Query", params: [{
 // 返回的数据示例
 const interfaceProps: Interface = {
   id: 123445678,
-  name: "查询宠物详情",
+  title: "查询宠物详情",
   method: "post",
   path: "/pet/{petId}",
   state: 4,
@@ -178,13 +181,13 @@ const interfaceProps: Interface = {
     name: "狗"
   }],
   createdAt: "2023年8月3日",
-  changedAt: "几秒前",
-  changer: "狐友",
-  creator: "狐友",
+  updatedAt: "几秒前",
+  updatePerson: "狐友",
+  createPerson: "狐友",
   leader: "未设置",
   catalog: "示例项目",
   desc: "aaaaaaaaaaaaaaaaaaaaaaaa",
-	paramCategories: categoriesProps,
+	params: categoriesProps,
 	responses: responsesProps
 };
 
@@ -192,52 +195,117 @@ const interfaceProps: Interface = {
 // const DetailsInterface: React.FC<Props> = ({ props }) => {
 
 // 默认关闭接收参数接口
-const DetailsInterface: React.FC = () => {
-  const { id, name, method, path, state, tags, createdAt,
-      changedAt, changer, creator, leader, catalog, desc, paramCategories, responses } = interfaceProps;
+const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
+  const { id, title, method, path, state, tags, createdAt,
+      updatedAt, updatePerson, createPerson, leader, catalog, desc, params, responses } = interfaceProps;
 
-			// 改变接口状态
+			// 修改接口状态
       const [ interState, setInterState ] = useState(state);
 
-			// 改变接口状态后的反馈
+			// 修改接口状态后的反馈
 			const [messageApi, contextHolder] = message.useMessage();
+
+			// 修改接口状态
+			const handleSelectChange = (value: string) => {
+				// const loadingMessage = messageApi.loading('加载中...', 1);
+				// setTimeout(() => {
+				// 	message.success('已保存', 1);
+				// 	loadingMessage();
+				// 	setInterState(value);
+				// }, 1000);
+				// 向后端发送请求
+				const url = "interface";
+				const options = {
+					method: "PUT",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						state: value
+					})
+				};
+				changeState(url, options);
+			};
+
+			async function changeState(url: string, options: RequestInit) {
+				const loadingMessage = messageApi.loading('加载中...', 1);
+				try {
+					const response = await fetch(url, options);
+					const data = await response.json();
+					message.success('已保存', 1);
+					loadingMessage();
+					setInterState(data);
+				} catch (error) {
+					message.error('保存失败', 1);
+					loadingMessage();
+					console.error(error);
+				}
+			}
+
+			// 删除接口
+			const handleDelete = () => {
+				const url = 'interface';
+				const options = {
+					method: 'DELETE',
+					header: {
+						Accept: "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						interfaceId: id
+					})
+				};
+				deleteInterface(url, options);
+			};
+
+			async function deleteInterface(url: string, options: RequestInit) {
+				const loadingMessage = messageApi.loading('加载中...', 1);
+				try {
+					const response = await fetch(url, options);
+					const data = await response.json();
+					message.success('删除成功', 1);
+					loadingMessage();
+				} catch(error) {
+					console.error(error);
+					message.success('删除失败', 1);
+					loadingMessage();
+				}
+			}
+
+			const handleRun = () => {
+				onRunClick('3');
+			}
 
       return (
 				<>
 					<Space direction='vertical' style={{width: "100%"}}>
 							<div className='interfaceContent flex'>
 									<Space>
-											<Text>{name}</Text>
-											<Text>{id}</Text>
+											<Text>{title}</Text>
+											<Text copyable>{id}</Text>
 									</Space>
 									<Space>
-											<Button type="primary" icon={<ThunderboltOutlined />}>
+											<Button type="primary" icon={<ThunderboltOutlined />} onClick={handleRun}>
 													运行
 											</Button>
 											<Button icon={<CodeOutlined />}>生成代码</Button>
-											<Button>删除</Button>
+											<Popconfirm
+												title="删除接口"
+												description="确定删除该接口？"
+												onConfirm={handleDelete}
+												okText="确认"
+												cancelText="取消"
+											>
+												<Button>删除</Button>
+											</Popconfirm>
 									</Space>
 							</div>
 							<div className='interfaceContent'>
 								<Tag color={getMethodColor(method)}>{method}</Tag>
 								<Space>
-										<Text>{path}</Text>
-										<Select value={interState} onChange={(value) => {
-											const loadingMessage = messageApi.loading('加载中...', 1);
-											setTimeout(() => {
-												message.success('已保存', 1);
-												loadingMessage();
-												setInterState(value);
-											}, 1000);
-											// 向后端发送请求
-											// const loadingMessage = messageApi.loading('加载中...', 1);
-											// axios.post('', {state: value})
-											// .then(response => {
-											// 	message.success('已保存', 1);
-											// 	loadingMessage();
-											// 	setInterState(response.data);
-											// });
-										}}>
+										<Text copyable>{path}</Text>
+										<Select value={interState} onChange={handleSelectChange}>
 											<Option value={1}>
 												<Badge status="success" text="已发布" />
 											</Option>
@@ -265,15 +333,15 @@ const DetailsInterface: React.FC = () => {
 								</Space>
 								<Space>
 									<Text type='secondary'>修改时间</Text>
-									<Text>{changedAt}</Text>
+									<Text>{updatedAt}</Text>
 								</Space>
 								<Space>
 									<Text type='secondary'>修改者</Text>
-									<Text>{changer}</Text>
+									<Text>{updatePerson}</Text>
 								</Space>
 								<Space>
 									<Text type='secondary'>创建者</Text>
-									<Text>{creator}</Text>
+									<Text>{createPerson}</Text>
 								</Space>
 								<Space>
 									<Text type='secondary'>责任人</Text>
@@ -291,7 +359,7 @@ const DetailsInterface: React.FC = () => {
 							{contextHolder}
 					</Space>
 					<DetailsMock />
-					<DetailsParam props={paramCategories} />
+					<DetailsParam props={params} />
 					<DetailsResponse props={responses} />
 				</>
       );

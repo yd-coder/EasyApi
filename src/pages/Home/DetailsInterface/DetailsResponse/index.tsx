@@ -1,9 +1,11 @@
 import { Tabs, Tag, Space, TabsProps, Tree, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { Response, Node } from '../interfaceDef';
+import { ReactNode, useEffect, useState } from 'react';
+import SplitPane from 'react-split';
+import MonacoEditor from '@monaco-editor/react';
 
-const { Title } = Typography;
-const { TreeNode } = Tree;
+const { Title, Text } = Typography;
 
 // 后端返回的数据
 interface Props {
@@ -12,33 +14,57 @@ interface Props {
 
 interface ResponseProps {
   props: Response;
+	index: number;
 }
 
-interface NodeProps {
-  props: Node[];
+interface DataNode {
+  title: ReactNode;
+  key: string;
+  children?: DataNode[];
 }
 
 const DetailsResponse: React.FC<Props> = ({ props }) => {
 	// 响应标签页
-  const items: TabsProps['items'] = props.map((response) => {
+  const items: TabsProps['items'] = props.map((response, index) => {
     return {
       key: response.id.toString(),
       label: `${response.name}(${response.statusCode})`,
-      children: <ResponseContent props={response} />
+      children: <ResponseContent props={response} index={index} />
     };
   });
 
   return (
     <>
-        <Title level={5}>返回响应</Title>
+        <Title level={5} style={{marginTop: '0.5em'}}>返回响应</Title>
         <Tabs defaultActiveKey={props[0].id.toString()} type="card" items={items} />
     </>
   );
 }
 
 // 响应标签页内容
-const ResponseContent: React.FC<ResponseProps> = ({ props }) => {
-  const { statusCode, contentFormat, nodes } = props;
+const ResponseContent: React.FC<ResponseProps> = ({ props, index }) => {
+  const { statusCode, contentFormat, node } = props;
+	const [ editorHeight, setEditorHeight ] = useState('0px');
+	const [ sizes, setSizes] = useState<[number, number]>([0.5, 0.5]);
+	const code = {
+		state: 200,
+		msg: '短信验证码发送成功！',
+		data: '2578'
+	}
+	const options = {
+		readOnly: true,
+		minimap: {enabled: false},
+		scrollBeyondLastLine: false
+	}
+	useEffect(() => {
+		const e = document.getElementsByClassName('editorContainer')[index];
+		setEditorHeight(`${e.clientHeight}px`);
+	}, []);
+
+	const handleDrag = (newSizes: [number, number]) => {
+		setSizes(newSizes);
+	};
+
   return (
     <>
       <div className='responseContent'>
@@ -51,51 +77,78 @@ const ResponseContent: React.FC<ResponseProps> = ({ props }) => {
           <span className='right'>{contentFormat}</span>
         </div>
       </div>
-      <div style={{display: "flex"}}>
-        <div style={{flex: "0 0 50%"}}>
-          <Title level={5}>数据结构</Title>
-          <TreeContent props={nodes} />
+			<SplitPane
+				className='split'
+				sizes={sizes}
+				direction='horizontal'
+				style={{display: "flex", marginTop: '0.5em'}}
+				cursor='e-resize'
+				gutterSize={3}
+				onDrag={handleDrag}
+			>
+        <div className='splitLeft'>
+          <Title level={5} className='title'>数据结构</Title>
+          <TreeContent {...node} />
         </div>
-        <div>
-          <Title level={5}>示例</Title>
+        <div className="splitRight editorContainer">
+          <Title level={5} className='title'>
+						示例
+						<Text copyable={{ text: JSON.stringify(code, null, 4) }}></Text>
+					</Title>
+					<MonacoEditor
+						width={'100%'}
+						height={editorHeight}
+						language="json"
+						options={options}
+						value={JSON.stringify(code, null, 4)}
+					/>
         </div>
-      </div>
+			</SplitPane>
     </>
   );
 };
 
 // 数据结构内容
-const TreeContent: React.FC<NodeProps> = ({ props }) => {
+const TreeContent: React.FC<Node> = (node) => {
+	const treedata = [];
+	treedata.push(ProcessNodeContent(node));
   return (
     <Tree
     showLine
     switcherIcon={<DownOutlined />}
     blockNode={true}
     selectable={false}
-  >
-    {ProcessNodeContent(props)}
-  </Tree>
+		treeData={treedata}
+  />
   );
 };
 
-function ProcessNodeContent(props: Node[]) {
-  return (
-    props.map((node) => {
-      const { id, child } = node;
-      if (child) {
-        return (
-        <TreeNode key={id} title={NodeContent(node)}>
-          {ProcessNodeContent(child)}
-        </TreeNode>
-        );
-      } else {
-        return (<TreeNode key={node.id} title={NodeContent(node)} />);
-      }
-    })
-  );
+const ProcessNodeContent = (node: Node) => {
+	const { id, child } = node;
+	const title: ReactNode = <NodeContent {...node} />;
+	const key: string = `${id}`;
+	if (child) {
+		const children: DataNode[] = [];
+		child.map((subNode) => {
+			const tmp: DataNode = ProcessNodeContent(subNode);
+			children.push(tmp);
+		});
+		const data: DataNode = {
+			title: title,
+			key: key,
+			children: children
+		}
+		return data;
+	} else {
+		const data: DataNode = {
+			title: title,
+			key: key
+		};
+		return data;
+	}
 }
 
-function NodeContent(node: Node) {
+const NodeContent: React.FC<Node> = (node) => {
   return (
     <div>
       <div className='flex'>
@@ -124,5 +177,6 @@ function NodeContent(node: Node) {
     </div>
   );
 }
+
 
 export default DetailsResponse

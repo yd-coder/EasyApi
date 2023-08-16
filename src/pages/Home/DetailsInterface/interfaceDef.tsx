@@ -1,18 +1,18 @@
 export interface Interface {
   id: number;
+	title: string;
   method: string;
   path: string;
-  name: string;
+	desc: string;
   state: number;
+	tags: Tag[];
+	catalog: string;
   leader: string;
-  desc: string;
-  creator: string;
+  createPerson: string;
   createdAt: string;
-  changer: string;
-  changedAt: string;
-  catalog: string;
-  tags: Tag[];
-	paramCategories: Category[];
+  updatePerson: string;
+  updatedAt: string;
+	params: Category[];
 	responses: Response[];
 }
 
@@ -41,7 +41,7 @@ export interface Response {
   name: string;
   statusCode: number;
   contentFormat: string;
-  nodes: Node[];
+  node: Node;
 }
 
 export interface Node {
