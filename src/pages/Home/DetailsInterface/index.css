@@ -33,7 +33,7 @@ span.right {
 	color: #666B90;
 }
 
-.gutter-horizontal:hover {
+.gutter:hover {
 	cursor: e-resize;
 }
 
