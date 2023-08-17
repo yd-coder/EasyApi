@@ -1,62 +1,62 @@
-export interface Interface {
-  id: number;
+export type Interface = {
+  id: string;
 	title: string;
   method: string;
   path: string;
-	desc: string;
-  state: number;
-	tags: Tag[];
+	desc?: string;
+  state: string;
+	tags?: Tag[];
 	catalog: string;
   leader: string;
   createPerson: string;
   createdAt: string;
   updatePerson: string;
   updatedAt: string;
-	params: Category[];
+	params?: Category[];
 	responses: Response[];
 }
 
-export interface Tag {
-  id: number;
+export type Tag = {
+  id: string;
   name: string;
 }
 
-export interface Category {
-	id: number,
+export type Category = {
+	id: string,
 	name: string,
 	params: Param[]
 }
 
-export interface Param {
-	id: number,
+export type Param = {
+	id: string,
 	name: string,
 	type: string,
-	desc: string,
+	desc?: string,
 	isRequired: string,
-	exampleValue: string
+	exampleValue?: string
 }
 
-export interface Response {
-  id: number;
+export type Response = {
+  id: string;
   name: string;
-  statusCode: number;
+  statusCode: string;
   contentFormat: string;
   node: Node;
 }
 
-export interface Node {
-  id: number;
+export type Node = {
+  id: string;
   name: string;
   type: string;
-  chineseName: string;
-  desc: string;
+  chineseName?: string;
+  desc?: string;
   isRequired: string;
   allowNull: string;
   child?: Node[];
 }
 
-export interface Mock {
-	id: number;
+export type Mock = {
+	id: string;
 	name: string;
 	source: string;
 	url: string;

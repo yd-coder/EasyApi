@@ -1,23 +1,22 @@
 import { Tabs, Tag, Space, TabsProps, Tree, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { Response, Node } from '../interfaceDef';
-import { ReactNode, useEffect, useState } from 'react';
-import SplitPane from 'react-split';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import Split from 'react-split';
 import MonacoEditor from '@monaco-editor/react';
 
 const { Title, Text } = Typography;
 
 // 后端返回的数据
-interface Props {
+type Props = {
   props: Response[];
 }
 
-interface ResponseProps {
+type ResponseProps = {
   props: Response;
-	index: number;
 }
 
-interface DataNode {
+type DataNode = {
   title: ReactNode;
   key: string;
   children?: DataNode[];
@@ -25,11 +24,11 @@ interface DataNode {
 
 const DetailsResponse: React.FC<Props> = ({ props }) => {
 	// 响应标签页
-  const items: TabsProps['items'] = props.map((response, index) => {
+  const items: TabsProps['items'] = props.map((response) => {
     return {
       key: response.id.toString(),
       label: `${response.name}(${response.statusCode})`,
-      children: <ResponseContent props={response} index={index} />
+      children: <ResponseContent props={response} />
     };
   });
 
@@ -42,10 +41,10 @@ const DetailsResponse: React.FC<Props> = ({ props }) => {
 }
 
 // 响应标签页内容
-const ResponseContent: React.FC<ResponseProps> = ({ props, index }) => {
+const ResponseContent: React.FC<ResponseProps> = ({ props }) => {
   const { statusCode, contentFormat, node } = props;
+	const myRef = useRef(null);
 	const [ editorHeight, setEditorHeight ] = useState('0px');
-	const [ sizes, setSizes] = useState<[number, number]>([0.5, 0.5]);
 	const code = {
 		state: 200,
 		msg: '短信验证码发送成功！',
@@ -57,13 +56,11 @@ const ResponseContent: React.FC<ResponseProps> = ({ props, index }) => {
 		scrollBeyondLastLine: false
 	}
 	useEffect(() => {
-		const e = document.getElementsByClassName('editorContainer')[index];
-		setEditorHeight(`${e.clientHeight}px`);
+		setEditorHeight(`${myRef.current.clientHeight}px`);
+		return () => {
+			// 在组件卸载时执行清理操作
+		};
 	}, []);
-
-	const handleDrag = (newSizes: [number, number]) => {
-		setSizes(newSizes);
-	};
 
   return (
     <>
@@ -77,33 +74,30 @@ const ResponseContent: React.FC<ResponseProps> = ({ props, index }) => {
           <span className='right'>{contentFormat}</span>
         </div>
       </div>
-			<SplitPane
-				className='split'
-				sizes={sizes}
-				direction='horizontal'
-				style={{display: "flex", marginTop: '0.5em'}}
-				cursor='e-resize'
-				gutterSize={3}
-				onDrag={handleDrag}
-			>
-        <div className='splitLeft'>
-          <Title level={5} className='title'>数据结构</Title>
-          <TreeContent {...node} />
-        </div>
-        <div className="splitRight editorContainer">
-          <Title level={5} className='title'>
-						示例
-						<Text copyable={{ text: JSON.stringify(code, null, 4) }}></Text>
-					</Title>
-					<MonacoEditor
-						width={'100%'}
-						height={editorHeight}
-						language="json"
-						options={options}
-						value={JSON.stringify(code, null, 4)}
-					/>
-        </div>
-			</SplitPane>
+			<Split
+					className='split'
+					sizes={[50, 50]}
+					direction='horizontal'
+					cursor='e-resize'
+					gutterSize={4}
+				>
+					<div className='splitLeft'>
+						<Title level={5} className='title'>数据结构</Title>
+						<TreeContent {...node} />
+					</div>
+					<div className='splitRight' ref={myRef}>
+						<Title level={5} className='title'>
+							示例
+							<Text copyable={{ text: JSON.stringify(code, null, 4) }}></Text>
+						</Title>
+						<MonacoEditor
+							height={editorHeight}
+							language="json"
+							options={options}
+							value={JSON.stringify(code, null, 4)}
+						/>
+					</div>
+			</Split>
     </>
   );
 };
@@ -149,30 +143,32 @@ const ProcessNodeContent = (node: Node) => {
 }
 
 const NodeContent: React.FC<Node> = (node) => {
+	const { name, type, chineseName, desc, isRequired, allowNull } = node;
   return (
     <div>
       <div className='flex'>
         <div>
-          <Tag color="blue">{node.name}</Tag>
+          <Tag color="blue">{name}</Tag>
           <Space>
-            <span className='colorTwo'>{node.type}</span>
-            {node.allowNull === "true" &&
+            <span className='colorTwo'>{type}</span>
+            {allowNull === "true" &&
             <>
               <span className='colorOne'>or</span>
               <span className='colorTwo'>null</span>
             </>}
-            {node.chineseName !== "null" &&
-            <span className='colorOne'>{node.chineseName}</span>}
+            {chineseName &&
+            <span className='colorOne'>{chineseName}</span>}
           </Space>
         </div>
-        {node.isRequired === "true" ?
+        {isRequired === "true" ?
           <Tag color="warning">必需</Tag> :
           <Tag color="default">可选</Tag>}
       </div>
-      <div className='colorOne'>{node.desc}</div>
+			{desc &&
+				<div className='colorOne'>{desc}</div>}
       <Space>
-        <span className='colorOne'>示例值:</span>
-        <Tag color="default">1</Tag>
+        <span className='colorOne'>高级设置:</span>
+        <Tag color="default">未知</Tag>
       </Space>
     </div>
   );

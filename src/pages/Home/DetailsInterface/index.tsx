@@ -12,18 +12,18 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 // 后端返回的数据
-interface Props {
+type Props = {
   // props: Interface;
 	onRunClick: (value: string) => void;
 }
 
 const responsesProps: Response[] = [{
-  id: 1,
+  id: "1",
   name: "成功",
-  statusCode: 200,
+  statusCode: "200",
   contentFormat: "JSON",
   node: {
-    id: 1,
+    id: "1",
     name: "node1",
     type: "integer",
     chineseName: "结点",
@@ -31,7 +31,7 @@ const responsesProps: Response[] = [{
     isRequired: "true",
     allowNull: "true",
     child: [{
-      id: 2,
+      id: "2",
       name: "node2",
       type: "integer",
       chineseName: "结点",
@@ -39,7 +39,7 @@ const responsesProps: Response[] = [{
       isRequired: "true",
       allowNull: "true",
 			child: [{
-				id: 4,
+				id: "4",
 				name: "data4",
 				type: "object(Pet)",
 				chineseName: "",
@@ -47,7 +47,7 @@ const responsesProps: Response[] = [{
 				isRequired: "true",
 				allowNull: "false",
 				child: [{
-					id: 5,
+					id: "5",
 					name: "id5",
 					type: "integer",
 					chineseName: "",
@@ -55,7 +55,7 @@ const responsesProps: Response[] = [{
 					isRequired: "false",
 					allowNull: "false",
 				}, {
-					id: 6,
+					id: "6",
 					name: "name6",
 					type: "string",
 					chineseName: "名称",
@@ -65,7 +65,7 @@ const responsesProps: Response[] = [{
 				}]
 			}]
     }, {
-      id: 3,
+      id: "3",
       name: "node3",
       type: "integer",
       chineseName: "结点",
@@ -75,12 +75,12 @@ const responsesProps: Response[] = [{
     }]
   }
 }, {
-  id: 2,
+  id: "2",
   name: "失败",
-  statusCode: 400,
+  statusCode: "400",
   contentFormat: "JSON",
   node: {
-    id: 7,
+    id: "7",
     name: "node11",
     type: "integer",
     chineseName: "结点",
@@ -88,7 +88,7 @@ const responsesProps: Response[] = [{
     isRequired: "true",
     allowNull: "true",
     child: [{
-      id: 8,
+      id: "8",
       name: "node22",
       type: "integer",
       chineseName: "结点",
@@ -96,7 +96,7 @@ const responsesProps: Response[] = [{
       isRequired: "true",
       allowNull: "true",
     }, {
-      id: 9,
+      id: "9",
       name: "node33",
       type: "integer",
       chineseName: "结点",
@@ -104,7 +104,7 @@ const responsesProps: Response[] = [{
       isRequired: "true",
       allowNull: "true",
 			child: [{
-				id: 10,
+				id: "10",
 				name: "data44",
 				type: "object(Pet)",
 				chineseName: "",
@@ -112,7 +112,7 @@ const responsesProps: Response[] = [{
 				isRequired: "true",
 				allowNull: "false",
 				child: [{
-					id: 11,
+					id: "11",
 					name: "id55",
 					type: "integer",
 					chineseName: "",
@@ -120,7 +120,7 @@ const responsesProps: Response[] = [{
 					isRequired: "false",
 					allowNull: "false",
 				}, {
-					id: 12,
+					id: "12",
 					name: "name66",
 					type: "string",
 					chineseName: "名称",
@@ -133,29 +133,29 @@ const responsesProps: Response[] = [{
   }
 }];
 
-const categoriesProps: Category[] = [{id: 1, name: "Query", params: [{
-	id: 1,
+const categoriesProps: Category[] = [{id: "1", name: "Query", params: [{
+	id: "1",
 	name: "petName",
 	type: "string",
 	desc: "宠物名称",
 	isRequired: "true",
 	exampleValue: "小柴"
 }, {
-	id: 2,
+	id: "2",
 	name: "petGender",
 	type: "string",
 	desc: "宠物性别",
 	isRequired: "false",
 	exampleValue: "女"
-}]}, {id: 2, name: "Path", params: [{
-	id: 3,
+}]}, {id: "2", name: "Path", params: [{
+	id: "3",
 	name: "petId",
 	type: "integer",
 	desc: "宠物ID",
 	isRequired: "true",
 	exampleValue: "123"
 }, {
-	id: 4,
+	id: "4",
 	name: "petCategories",
 	type: "string",
 	desc: "宠物类别",
@@ -165,19 +165,19 @@ const categoriesProps: Category[] = [{id: 1, name: "Query", params: [{
 
 // 返回的数据示例
 const interfaceProps: Interface = {
-  id: 123445678,
+  id: "123445678",
   title: "查询宠物详情",
   method: "post",
   path: "/pet/{petId}",
-  state: 4,
+  state: "4",
   tags: [{
-    id: 1,
+    id: "1",
     name: "宠物"
   }, {
-    id: 2,
+    id: "2",
     name: "猫"
   }, {
-    id: 3,
+    id: "3",
     name: "狗"
   }],
   createdAt: "2023年8月3日",
@@ -186,7 +186,6 @@ const interfaceProps: Interface = {
   createPerson: "狐友",
   leader: "未设置",
   catalog: "示例项目",
-  desc: "aaaaaaaaaaaaaaaaaaaaaaaa",
 	params: categoriesProps,
 	responses: responsesProps
 };
@@ -214,7 +213,7 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 				// 	setInterState(value);
 				// }, 1000);
 				// 向后端发送请求
-				const url = "interface";
+				const url = "/interface";
 				const options = {
 					method: "PUT",
 					headers: {
@@ -245,7 +244,7 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 
 			// 删除接口
 			const handleDelete = () => {
-				const url = 'interface';
+				const url = '/interface';
 				const options = {
 					method: 'DELETE',
 					header: {
@@ -273,20 +272,21 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 				}
 			}
 
-			const handleRun = () => {
+			// 点击运行
+			const handleRunClick = () => {
 				onRunClick('3');
 			}
 
       return (
 				<>
-					<Space direction='vertical' style={{width: "100%"}}>
+					<Space direction='vertical' style={{width: "100%", overflow: 'hidden'}} >
 							<div className='interfaceContent flex'>
 									<Space>
 											<Text>{title}</Text>
 											<Text copyable>{id}</Text>
 									</Space>
 									<Space>
-											<Button type="primary" icon={<ThunderboltOutlined />} onClick={handleRun}>
+											<Button type="primary" icon={<ThunderboltOutlined />} onClick={handleRunClick}>
 													运行
 											</Button>
 											<Button icon={<CodeOutlined />}>生成代码</Button>
@@ -306,26 +306,28 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 								<Space>
 										<Text copyable>{path}</Text>
 										<Select value={interState} onChange={handleSelectChange}>
-											<Option value={1}>
+											<Option value='1'>
 												<Badge status="success" text="已发布" />
 											</Option>
-											<Option value={2}>
+											<Option value='2'>
 												<Badge status="warning" text="测试中" />
 											</Option>
-											<Option value={3}>
+											<Option value='3'>
 												<Badge status="default" text="将废弃" />
 											</Option>
-											<Option value={4}>
+											<Option value='4'>
 												<Badge status="processing" text="开发中" />
 											</Option>
 										</Select>
 								</Space>
 							</div>
-							<div className='interfaceContent'>
-								{tags.map((tag) => (
-									<Tag key={tag.id} color="blue">{tag.name}</Tag>
-								))}
-							</div>
+							{tags &&
+								<div className='interfaceContent'>
+									{tags.map((tag) => (
+										<Tag key={tag.id} color="blue">{tag.name}</Tag>
+									))}
+								</div>
+							}
 							<Space className='interfaceContent' size={'large'}>
 								<Space>
 									<Text type="secondary">创建时间</Text>
@@ -352,10 +354,12 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 									<Text>{catalog}</Text>
 								</Space>
 							</Space>
-							<div className='interfaceContent'>
-								<Title level={5} style={{fontWeight: "500"}}>接口说明</Title>
-								<Text type="secondary">{desc}</Text>
-							</div>
+							{desc &&
+								<div className='interfaceContent'>
+									<Title level={5} style={{fontWeight: "500"}}>接口说明</Title>
+									<Text type="secondary">{desc}</Text>
+								</div>
+							}
 							{contextHolder}
 					</Space>
 					<DetailsMock />

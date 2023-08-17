@@ -33,26 +33,26 @@ span.right {
 	color: #666B90;
 }
 
-.documentView {
-	overflow-y: hidden;
-}
-
 .gutter-horizontal:hover {
 	cursor: e-resize;
+}
+
+.split {
+	display: flex;
 }
 
 .splitLeft {
 	border-radius: 8px 0 0 0;
 	border-left: 1px solid #f0f0f0;
 	border-top: 1px solid #f0f0f0;
-	flex: 1 1 0;
+	overflow: hidden;
 }
 
 .splitRight {
 	border-radius: 0 8px 0 0;
 	border-right: 1px solid #f0f0f0;
 	border-top: 1px solid #f0f0f0;
-	flex: 1 1 0;
+	overflow: hidden;
 }
 
 .splitLeft .title, .splitRight .title {
