@@ -1,6 +1,6 @@
 import { Typography, Button, Space, Table } from "antd";
 import type { ColumnsType } from 'antd/es/table';
-import { Mock } from '../interfaceDef';
+import { Mock } from '../typeDef';
 
 const { Title } = Typography;
 
@@ -36,12 +36,12 @@ const columns: ColumnsType<Mock> = [
 
 // 后端返回的数据示例
 const mockProps = [{
-  id: '1',
+  key: '1',
   name: '在售宠物（成功）（200）',
   source: '高级Mock',
   url: 'https://mock.apifox.cn/m1/3102608-0-default/pet/1'
 }, {
-  id: '2',
+  key: '2',
   name: '在售宠物（200）',
   source: '高级Mock',
   url: 'https://mock.apifox.cn/m1/3102608-0-default/pet/2'

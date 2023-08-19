@@ -1,9 +1,10 @@
 import { Tabs, Tag, Space, TabsProps, Tree, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import { Response, Node } from '../interfaceDef';
+import { Response, Node } from '../typeDef';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import Split from 'react-split';
 import MonacoEditor from '@monaco-editor/react';
+import styles from './index.module.scss';
 
 const { Title, Text } = Typography;
 
@@ -64,29 +65,29 @@ const ResponseContent: React.FC<ResponseProps> = ({ props }) => {
 
   return (
     <>
-      <div className='responseContent'>
+      <div className={styles.responseContent}>
         <div>
-          <span className='left'>HTTP 状态码:</span>
-          <span className='right'>{statusCode}</span>
+          <span className={styles.left}>HTTP 状态码:</span>
+          <span className={styles.right}>{statusCode}</span>
         </div>
         <div>
-          <span className='left'>内容格式:</span>
-          <span className='right'>{contentFormat}</span>
+          <span className={styles.left}>内容格式:</span>
+          <span className={styles.right}>{contentFormat}</span>
         </div>
       </div>
 			<Split
-					className='split'
+					className={styles.split}
 					sizes={[50, 50]}
 					direction='horizontal'
 					cursor='e-resize'
 					gutterSize={4}
 				>
-					<div className='splitLeft'>
-						<Title level={5} className='title'>数据结构</Title>
+					<div className={styles.splitLeft}>
+						<Title level={5} className={styles.title}>数据结构</Title>
 						<TreeContent {...node} />
 					</div>
-					<div className='splitRight' ref={myRef}>
-						<Title level={5} className='title'>
+					<div className={styles.splitRight} ref={myRef}>
+						<Title level={5} className={styles.title}>
 							示例
 							<Text copyable={{ text: JSON.stringify(code, null, 4) }}></Text>
 						</Title>
@@ -146,18 +147,18 @@ const NodeContent: React.FC<Node> = (node) => {
 	const { name, type, chineseName, desc, isRequired, allowNull } = node;
   return (
     <div>
-      <div className='flex'>
+      <div className={styles.flex}>
         <div>
           <Tag color="blue">{name}</Tag>
           <Space>
-            <span className='colorTwo'>{type}</span>
+            <span className={styles.colorTwo}>{type}</span>
             {allowNull === "true" &&
             <>
-              <span className='colorOne'>or</span>
-              <span className='colorTwo'>null</span>
+              <span className={styles.colorOne}>or</span>
+              <span className={styles.colorTwo}>null</span>
             </>}
             {chineseName &&
-            <span className='colorOne'>{chineseName}</span>}
+            <span className={styles.colorOne}>{chineseName}</span>}
           </Space>
         </div>
         {isRequired === "true" ?
@@ -165,9 +166,9 @@ const NodeContent: React.FC<Node> = (node) => {
           <Tag color="default">可选</Tag>}
       </div>
 			{desc &&
-				<div className='colorOne'>{desc}</div>}
+				<div className={styles.colorOne}>{desc}</div>}
       <Space>
-        <span className='colorOne'>高级设置:</span>
+        <span className={styles.colorOne}>高级设置:</span>
         <Tag color="default">未知</Tag>
       </Space>
     </div>

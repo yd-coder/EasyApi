@@ -5,8 +5,7 @@ import DetailsMock from "./DetailsMock";
 import DetailsParam from "./DetailsParam";
 import DetailsResponse from "./DetailsResponse";
 
-import { Interface, Category, Response } from './interfaceDef';
-import './index.css';
+import { Interface, Category, Response } from './typeDef';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -280,7 +279,7 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
       return (
 				<>
 					<Space direction='vertical' style={{width: "100%", overflow: 'hidden'}} >
-							<div className='interfaceContent flex'>
+							<div className='interfaceContent' style={{display: 'flex', justifyContent: 'space-between'}}>
 									<Space>
 											<Text>{title}</Text>
 											<Text copyable>{id}</Text>

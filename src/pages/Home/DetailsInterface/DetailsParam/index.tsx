@@ -1,5 +1,6 @@
 import { Card, Typography, Tag, Space } from 'antd';
-import { Category, Param } from '../interfaceDef';
+import { Category, Param } from '../typeDef';
+import styles from './index.module.scss';
 const { Title, Text } = Typography;
 
 // 后端返回的数据
@@ -49,9 +50,9 @@ const ParamDetail: React.FC<ParamProps> = ({ props }) => {
             <div>
                 <Tag color="blue">{name}</Tag>
                 <Space>
-                    <span className='colorTwo'>{type}</span>
+                    <span className={styles.colorTwo}>{type}</span>
 										{desc &&
-											<span className='colorOne'>{desc}</span>
+											<span className={styles.colorOne}>{desc}</span>
 										}
                     {isRequired == "true" ?
                     <Tag color="warning">必需</Tag> :
