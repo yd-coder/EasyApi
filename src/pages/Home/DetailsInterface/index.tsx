@@ -278,6 +278,7 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 
       return (
 				<>
+					{contextHolder}
 					<Space direction='vertical' style={{width: "100%", overflow: 'hidden'}} >
 							<div className='interfaceContent' style={{display: 'flex', justifyContent: 'space-between'}}>
 									<Space>
@@ -359,7 +360,6 @@ const DetailsInterface: React.FC<Props> = ({ onRunClick }) => {
 									<Text type="secondary">{desc}</Text>
 								</div>
 							}
-							{contextHolder}
 					</Space>
 					<DetailsMock />
 					<DetailsParam props={params} />
