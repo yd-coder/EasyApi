@@ -23,12 +23,12 @@ const LeftSider: React.FC = () => {
 			<div className={styles.outerContainer}>
 				<div className={styles.innerContainer}>
 					<Tooltip title="主页" placement="right" color="#1677ff">
-					<a className={styles.main}><HomeOutlined style={{fontSize: '28px'}} /></a>
+					<a className={styles.main} href="/main" target="_blank"><HomeOutlined style={{fontSize: '28px'}} /></a>
 					</Tooltip>
-					<Space direction="vertical" className={styles.button}>
+					{/* <Space direction="vertical" className={styles.button}>
 						<div><ApiOutlined style={{fontSize: '20px'}} /></div>
 						<p>接口管理</p>
-					</Space>
+					</Space> */}
 					<Space direction="vertical" className={styles.button}>
 						<div><UserAddOutlined style={{fontSize: '20px'}}  /></div>
 						<p>邀请成员</p>
