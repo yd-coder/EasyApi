@@ -10,6 +10,7 @@ import InterfaceTree from './InterfaceTree';
 import ProjectView from './ProjectView';
 import { useState, useRef } from 'react'
 import NewInterface from './NewInterface';
+import LeftSider from './LeftSider';
 
 const { Sider, Content } = Layout;
 
@@ -96,7 +97,7 @@ const Home: React.FC = () => {
 	const handleOk = () => {
 		setIsModalOpen(false);
 	};
-	
+
 	// 取消新增目录
 	const handleCancel = () => {
 		setIsModalOpen(false);
@@ -105,6 +106,7 @@ const Home: React.FC = () => {
 	return (
 		<div className={style.box}>
 			<Layout style={{width: '100vw',height: '100vh'}}>
+				<LeftSider />
 				{/* 侧边栏 */}
 				<Sider trigger={null}
 					style={{ background: 'white', }}
@@ -141,7 +143,7 @@ const Home: React.FC = () => {
                         	label="目录名称"
                         	name="name"
                         	rules={[{required: true,message: '请输入目录名称'},]}
-                    	>    
+                    	>
                         	<Input />
                     	</Form.Item>
                 </Form>
