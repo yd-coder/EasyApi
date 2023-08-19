@@ -1,4 +1,4 @@
-import { Card, Dropdown, Avatar, Typography, Button } from 'antd';
+import { Dropdown, Avatar, Typography, Button } from 'antd';
 import { EllipsisOutlined, DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import styles from './index.module.scss';
@@ -38,10 +38,11 @@ const props: Project[] = [
 ]
 
 const AllProject: React.FC = () => {
+
 	return (
 		<div className={styles.project}>
 			{props && props.map((project) => (
-				<Card key={project.id} className={styles.card} style={{ width: '250px', margin: '15px' }}>
+				<a key={project.id} className={styles.card} href='/home'>
 					<div className={styles.avatar}>
 						<Avatar shape="square" size="large" icon={<UserOutlined />} />
 						<Dropdown menu={{ items }} placement='bottomRight' arrow={{ pointAtCenter: true }}>
@@ -49,7 +50,7 @@ const AllProject: React.FC = () => {
 						</Dropdown>
 					</div>
 					<Text style={{marginTop: '15px', display: 'block'}}>{project.name}</Text>
-				</Card>
+				</a>
 			)
 			)}
 		</div>

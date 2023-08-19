@@ -1,10 +1,12 @@
-import { Typography, Input, Button, Table, Space, Tag } from "antd";
-import { UserAddOutlined } from "@ant-design/icons";
+import { Typography, Input, Button, Table, Space, Tag, Modal, Form, message, Select } from "antd";
+import { UserAddOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import styles from './index.module.scss';
 import type { ColumnsType } from "antd/es/table";
+import React, { useState } from "react";
 
 const { Title, Text } = Typography;
 const { Search } = Input;
+const { Option } = Select;
 
 type Member = {
 	name: string,
@@ -106,20 +108,123 @@ const handleDate = (date: string) => {
 }
 
 const MemberPrivilege: React.FC = () => {
+	const [ open, setOpen ] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
+
+	const showModal = () => {
+		setOpen(true);
+	}
+	const onFinish = (values: any) => {
+		console.log('Received values of form: ', values);
+		const url = '/project';
+		const options = {
+			method: 'POST',
+			body: JSON.stringify(values)
+		};
+		fetchData(url, options);
+	};
+	async function fetchData(url: string, options: RequestInit) {
+		try {
+			const response: any = await fetch(url, options);
+			const data = await response.json();
+			messageApi.open({
+				type: 'success',
+				content: '创建成功',
+			});
+			setOpen(false);
+		} catch(error) {
+			messageApi.open({
+				type: 'error',
+				content: '创建失败',
+			});
+			setOpen(false);
+		}
+	}
+	const onFinishFailed = (values: any) => {
+		console.log('Received values of form: ', values);
+	};
+	const onCancel = () => {
+		setOpen(false);
+	}
 	return (
-		<Space direction='vertical' style={{width: '100%'}}>
-			<div className={styles.member}>
-				<Title level={1} className={styles.clearMargin}>{data.length}</Title>
-				<Title level={5} className={styles.clearMargin}>成员</Title>
-			</div>
-			<div className={styles.flex}>
-					<Search placeholder="搜索" allowClear style={{ width: 200 }} />
-					<Button type="primary" icon={<UserAddOutlined />}>
-						邀请成员
-					</Button>
-			</div>
-			<Table columns={columns} dataSource={data} pagination={false} />
-		</Space>
+		<>
+			{contextHolder}
+			<Space direction='vertical' style={{width: '100%'}}>
+				<div className={styles.member}>
+					<Title level={1} className={styles.clearMargin}>{data.length}</Title>
+					<Title level={5} className={styles.clearMargin}>成员</Title>
+				</div>
+				<div className={styles.flex}>
+						<Search placeholder="搜索" allowClear style={{ width: 200 }} />
+						<Button type="primary" icon={<UserAddOutlined />} onClick={showModal}>
+							邀请成员
+						</Button>
+				</div>
+				<Table columns={columns} dataSource={data} pagination={false} />
+			</Space>
+			<Modal
+        open={open}
+				onCancel={onCancel}
+				footer={null}
+      >
+				<div className={styles.form}>
+					<Title level={4}>邀请成员</Title>
+					<Form
+						name="inviteMembers"
+						onFinish={onFinish}
+						onFinishFailed={onFinishFailed}
+						autoComplete="off"
+					>
+						<Form.List name="members">
+							{(fields, { add, remove }) => (
+								<>
+									{fields.map((field) => (
+										<Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
+											<Form.Item
+												{...field}
+												name={[field.name, 'privilege']}
+											>
+												<Select defaultValue='3' style={{ width: 120 }}>
+													<Option value='1'>
+														项目管理员
+													</Option>
+													<Option value='2'>
+														项目所有者
+													</Option>
+													<Option value='3'>
+														项目成员
+													</Option>
+												</Select>
+											</Form.Item>
+
+											<Form.Item
+												{...field}
+												name={[field.name, 'name']}
+												rules={[{ required: true, message: '请输入成员名称' }]}
+											>
+												<Input placeholder="成员名称" />
+											</Form.Item>
+
+											<MinusCircleOutlined onClick={() => remove(field.name)} />
+										</Space>
+									))}
+									<Form.Item>
+										<Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+											添加成员
+										</Button>
+									</Form.Item>
+								</>
+							)}
+						</Form.List>
+						<Form.Item>
+							<Button type="primary" htmlType="submit">
+								发送邀请
+							</Button>
+						</Form.Item>
+					</Form>
+				</div>
+      </Modal>
+		</>
 	);
 }
 
