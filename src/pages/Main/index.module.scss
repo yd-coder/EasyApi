@@ -1,0 +1,36 @@
+.sider {
+	border-right: 1px solid rgba(5, 5, 5, 0.06);
+	.title {
+		display: flex;
+		justify-content: center;
+		padding: 25px;
+		border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+		.image {
+			height: 50px;
+			width: auto;
+		}
+		.name {
+			margin-left: 0.5em;
+			line-height: 50px;
+			margin-bottom: 0;
+		}
+	}
+}
+.right {
+	background-color: transparent;
+	overflow-y: scroll;
+	.header {
+		background-color: transparent;
+		display: flex;
+		justify-content: right;
+		border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+		.avatar {
+			.images:hover {
+				cursor: pointer;
+			}
+		}
+	}
+	.content {
+		padding: 30px;
+	}
+}

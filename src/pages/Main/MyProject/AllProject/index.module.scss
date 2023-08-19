@@ -1,0 +1,21 @@
+.project {
+	display: flex;
+	flex-wrap: wrap;
+	.card {
+		transition: border 0.2s ease-in-out;
+	}
+	.card:hover {
+		border: 1px solid #1677ff;
+		cursor: pointer;
+	}
+}
+
+.avatar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.more:hover {
+		background-color: #F6F6F6;
+		cursor: pointer;
+	}
+}
