@@ -1,8 +1,12 @@
+import Welcome from '@/components/Welcome'
+import LoginForm from './LoginForm'
+import styles from './index.module.scss'
+
 const Login: React.FC = () => {
 	return (
-		<div>
-			<h1>Login</h1>
-			todo by toby
+		<div className={styles.container}>
+			<Welcome />
+			<LoginForm />
 		</div>
 	)
 }

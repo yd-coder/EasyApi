@@ -1,0 +1,50 @@
+.box {
+    .title {
+        text-align: center;
+        font-size: 24px;
+        border-bottom: 1px solid #ddd;
+        margin: 15px 0px;
+        padding-bottom: 15px;
+    }
+    .subtitle {
+        width: 100%;
+        height: 35px;
+        font-size: 18px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        line-height: 35px;
+        &:hover {
+            background: rgba(224, 241, 247, 0.4);
+            .add {
+                display: block;
+            }
+        }
+        .add {
+            box-sizing: border-box;
+            width: 30px;
+            height: 100%;
+            float: right;
+            margin-right: 5px;
+            text-align: center;
+            border-radius: 6px;
+            display: none;
+            &:hover {
+                background-color: #ddeaf6;
+            }
+        }  
+    }
+    .content {
+        height: 100vh;
+        overflow-y: auto;
+        background-color: #fff;
+        margin: 10px;
+        padding: 10px;
+    }
+}
+
+:global {
+    .ant-tabs-nav-add {
+        min-height: 40px;
+    }
+}

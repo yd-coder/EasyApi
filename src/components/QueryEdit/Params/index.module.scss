@@ -1,0 +1,42 @@
+.title {
+	color: rgba(16, 24, 40, 0.56);
+	font-size: 14px;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.bodyType {
+	display: inline-block;
+	font-size: 10px;
+	color: #101828cc;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+.bodyTypeActive {
+	display: inline-block;
+	padding: 1px 8px;
+	font-size: 10px;
+	background-color: #1677ff;
+	color: #fff;
+	border-radius: 100vh;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+.tableHeader {
+	display: flex;
+	align-items: center;
+	span {
+		flex: 1;
+		text-align: left;
+		color: rgba(16, 24, 40, 0.56);
+		font-size: 14px;
+	}
+	& span:nth-child(3) {
+		flex: none;
+		width: 108px;
+	}
+	& span:nth-child(4) {
+		flex: none;
+		width: 350px;
+	}
+}

@@ -1,8 +1,12 @@
+import Welcome from '@/components/Welcome'
+import RegisterForm from './RegisterForm'
+import styles from './index.module.scss'
+
 const Register: React.FC = () => {
 	return (
-		<div>
-			<h1>Register</h1>
-			todo by toby
+		<div className={styles.container}>
+			<Welcome />
+			<RegisterForm />
 		</div>
 	)
 }

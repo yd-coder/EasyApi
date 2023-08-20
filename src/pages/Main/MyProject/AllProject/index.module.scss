@@ -1,0 +1,26 @@
+.project {
+	display: flex;
+	flex-wrap: wrap;
+	.card {
+		width: 250px;
+		margin: 15px;
+		padding: 24px;
+		border-radius: 8px;
+		border: 1px solid #f0f0f0;
+		transition: border 0.2s ease-in-out;
+	}
+	.card:hover {
+		border: 1px solid #1677ff;
+		cursor: pointer;
+	}
+}
+
+.avatar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.more:hover {
+		background-color: #F6F6F6;
+		cursor: pointer;
+	}
+}

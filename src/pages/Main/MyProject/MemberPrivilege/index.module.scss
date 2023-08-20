@@ -1,0 +1,18 @@
+.member {
+	color: #3F4552;
+	background-color: #F9FAFB;
+	padding: 25px;
+	text-align: center;
+	border-radius: 8px;
+	border: 1px solid rgba(5, 5, 5, 0.06);
+	.clearMargin {
+		margin: 0px;
+	}
+}
+.flex {
+	display: flex;
+	justify-content: space-between;
+}
+.form {
+	text-align: center;
+}
