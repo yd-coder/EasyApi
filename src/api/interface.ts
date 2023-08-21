@@ -19,3 +19,17 @@ export async function postCreateInterface(url: string, data: any) {
 
 	return res.json()
 }
+
+export async function putModifyInterface(url: string, data: any) {
+	let token = tokenCheck()
+	const res = await fetch(preurl + url, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json;charset=utf-8',
+			Authorization: token
+		},
+		body: JSON.stringify(data)
+	})
+
+	return res.json()
+}
