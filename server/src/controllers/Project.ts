@@ -35,6 +35,7 @@ async function create(req, res) {
 	const { logo, title, subTitle, desc } = req.body
 	const projectRepository = AppDataSource.getRepository(Project)
 	const findProject = await projectRepository.findOne({ where: { title } })
+
 	let business_code: number = 0
 	let business_msg: string = ''
 	let business_data = { isLogin: false }
@@ -62,7 +63,7 @@ async function create(req, res) {
 }
 
 async function modify(req, res) {
-	const { projectId, logo, title, subTitle, desc } = req.body
+	const { id, logo, title, subTitle, desc } = req.body
 
 	let business_code: number = 0
 	let business_msg: string = ''
@@ -71,7 +72,7 @@ async function modify(req, res) {
 	try {
 		const projectRepository = AppDataSource.getRepository(Project)
 		const modifyProject = await projectRepository.findOne({
-			where: { id: projectId }
+			where: { id: id }
 		})
 		modifyProject.logo = logo
 		modifyProject.title = title
@@ -99,7 +100,7 @@ async function remove(req, res) {
 	const interfaceRepository = AppDataSource.getRepository(Interface)
 	let business_code: number = 0
 	let business_msg: string = '项目删除成功'
-	let business_data = {}
+	let business_data = {projectId: projectId}
 
 	// 先删除带外键的副表的数据
 	const deleteInterface = await interfaceRepository

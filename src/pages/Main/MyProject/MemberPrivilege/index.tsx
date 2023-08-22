@@ -116,10 +116,15 @@ const MemberPrivilege: React.FC = () => {
 	}
 	const onFinish = (values: any) => {
 		console.log('Received values of form: ', values);
-		const url = '/project';
-		const options = {
+		const url = 'http://localhost:5000/project';
+		const options: any = {
 			method: 'POST',
-			body: JSON.stringify(values)
+			mode: 'cors',
+			body: JSON.stringify(values),
+			headers: {
+				"Content-Type": "application/json",
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+			},
 		};
 		fetchData(url, options);
 	};
@@ -163,10 +168,10 @@ const MemberPrivilege: React.FC = () => {
 				<Table columns={columns} dataSource={data} pagination={false} />
 			</Space>
 			<Modal
-        open={open}
+       	open={open}
 				onCancel={onCancel}
 				footer={null}
-      >
+     	>
 				<div className={styles.form}>
 					<Title level={4}>邀请成员</Title>
 					<Form
@@ -183,8 +188,9 @@ const MemberPrivilege: React.FC = () => {
 											<Form.Item
 												{...field}
 												name={[field.name, 'privilege']}
+												rules={[{ required: true, message: '请选择权限' }]}
 											>
-												<Select defaultValue='3' style={{ width: 120 }}>
+												<Select style={{ width: 120 }}>
 													<Option value='1'>
 														项目管理员
 													</Option>
@@ -223,7 +229,7 @@ const MemberPrivilege: React.FC = () => {
 						</Form.Item>
 					</Form>
 				</div>
-      </Modal>
+      		</Modal>
 		</>
 	);
 }
