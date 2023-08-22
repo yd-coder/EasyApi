@@ -85,7 +85,7 @@ const MyProject: React.FC = () => {
 			const { business_code, business_data, business_msg } = await response.json();
 			if (business_code === 0) {
 				messageApi.info(business_msg);
-				setProjects([business_data, ...projects]);
+				business_data.id && setProjects([business_data, ...projects]);
 			}
 			setOpen(false);
 		} catch(error) {
